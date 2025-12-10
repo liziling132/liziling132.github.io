@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java期末复习 | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这份试卷涵盖了Java基础语法的核心重点，包括面向对象（OOP）、集合框架、多线程、异常处理以及IO&#x2F;网络编程。 下面我将分三个部分为你详细解析：第一部分是对简答&#x2F;分析题（1-11题）的解析，第二部分是三道编程大题的参考代码，第三部分是针对这份真题总结的备考方向。  第一部分：简答与程序分析题解析1. 参数传递（值传递 vs 引用传递）知识点： Java中参数传递只有“值传递”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java期末复习">
+<meta property="og:url" content="http://example.com/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="这份试卷涵盖了Java基础语法的核心重点，包括面向对象（OOP）、集合框架、多线程、异常处理以及IO&#x2F;网络编程。 下面我将分三个部分为你详细解析：第一部分是对简答&#x2F;分析题（1-11题）的解析，第二部分是三道编程大题的参考代码，第三部分是针对这份真题总结的备考方向。  第一部分：简答与程序分析题解析1. 参数传递（值传递 vs 引用传递）知识点： Java中参数传递只有“值传递”">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/2.png">
+<meta property="article:published_time" content="2025-12-10T10:36:00.000Z">
+<meta property="article:modified_time" content="2025-12-09T15:35:48.222Z">
+<meta property="article:author" content="Ling">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="期末复习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/2.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Java期末复习",
+  "url": "http://example.com/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/",
+  "image": "http://example.com/img/2.png",
+  "datePublished": "2025-12-10T10:36:00.000Z",
+  "dateModified": "2025-12-09T15:35:48.222Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "http://example.com/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/2.png"><link rel="canonical" href="http://example.com/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java期末复习',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script>[object Object]<meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/4.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/2.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/2.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Java期末复习</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Java期末复习</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-10T10:36:00.000Z" title="发表于 2025-12-10 18:36:00">2025-12-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-09T15:35:48.222Z" title="更新于 2025-12-09 23:35:48">2025-12-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>这份试卷涵盖了Java基础语法的核心重点，包括面向对象（OOP）、集合框架、多线程、异常处理以及IO&#x2F;网络编程。</p>
+<p>下面我将分三个部分为你详细解析：<strong>第一部分是对简答&#x2F;分析题（1-11题）的解析</strong>，<strong>第二部分是三道编程大题的参考代码</strong>，<strong>第三部分是针对这份真题总结的备考方向</strong>。</p>
+<hr>
+<h3 id="第一部分：简答与程序分析题解析"><a href="#第一部分：简答与程序分析题解析" class="headerlink" title="第一部分：简答与程序分析题解析"></a>第一部分：简答与程序分析题解析</h3><h4 id="1-参数传递（值传递-vs-引用传递）"><a href="#1-参数传递（值传递-vs-引用传递）" class="headerlink" title="1. 参数传递（值传递 vs 引用传递）"></a>1. 参数传递（值传递 vs 引用传递）</h4><p><strong>知识点：</strong> Java中参数传递只有“值传递”。基本数据类型传递的是数值的拷贝，引用数据类型传递的是地址（引用）的拷贝。 <strong>解析：</strong></p>
+<ul>
+<li><code>modifyValue</code> 方法中：<ul>
+<li><code>int val</code> 是基本类型，方法内修改 <code>val</code> 不会影响 <code>main</code> 方法中的 <code>count</code>。</li>
+<li><code>IntClass s</code> 是引用类型，方法内通过 <code>s.value = val</code> 修改了对象内部的属性，这会直接影响 <code>main</code> 方法中的对象 <code>a</code>。 <strong>运行结果：</strong></li>
+</ul>
+</li>
+</ul>
+<p>Plaintext</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0      // a 初始化后 value 默认为 0</span><br><span class="line">100    // 方法调用修改了对象 a 的 value</span><br><span class="line">100    // 基本类型 count 未被修改</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-抽象类-vs-接口"><a href="#2-抽象类-vs-接口" class="headerlink" title="2. 抽象类 vs 接口"></a>2. 抽象类 vs 接口</h4><p><strong>知识点：</strong> 面向对象抽象机制。 <strong>解答：</strong></p>
+<ul>
+<li><strong>共同点：</strong> 1. 都不能被实例化（不能 <code>new</code>）。 2. 都可以包含抽象方法（没有方法体的方法）。 3. 都是为了实现多态和代码复用。</li>
+<li><strong>不同点：</strong><ul>
+<li><strong>属性：</strong> 接口中默认是 <code>public static final</code>（常量）；抽象类可以有普通成员变量。</li>
+<li><strong>方法：</strong> 接口（Java 8前）只能有抽象方法；抽象类可以有非抽象方法（具体实现）。</li>
+<li><strong>实现策略（继承）：</strong> 一个类只能继承（extends）一个抽象类（单继承）；但可以实现（implements）多个接口（多实现）。</li>
+<li><strong>构造方法：</strong> 抽象类有构造方法（供子类调用）；接口没有构造方法。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-ArrayList-vs-LinkedList"><a href="#3-ArrayList-vs-LinkedList" class="headerlink" title="3. ArrayList vs LinkedList"></a>3. ArrayList vs LinkedList</h4><p><strong>知识点：</strong> 集合框架底层数据结构。 <strong>解答：</strong></p>
+<ul>
+<li><strong>选择：</strong> 应该选择 <strong>LinkedList</strong>。</li>
+<li><strong>原因：</strong><ul>
+<li><strong>ArrayList</strong> 底层是<strong>动态数组</strong>。在中间插入或删除元素时，需要移动后续所有元素，效率较低（O(N)）。适合随机查找（O(1)）。</li>
+<li><strong>LinkedList</strong> 底层是<strong>双向链表</strong>。插入和删除只需要修改前后节点的指针，效率很高（O(1)）。适合频繁增删。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-final-与-finally"><a href="#4-final-与-finally" class="headerlink" title="4. final 与 finally"></a>4. final 与 finally</h4><p><strong>知识点：</strong> 关键字辨析。 <strong>解答：</strong></p>
+<ul>
+<li><strong>final 特点：</strong><ul>
+<li>修饰<strong>变量</strong>：变为常量，值不可更改（引用不可变）。</li>
+<li>修饰<strong>方法</strong>：不能被子类重写（Override）。</li>
+<li>修饰<strong>类</strong>：不能被继承（如 <code>String</code> 类）。</li>
+</ul>
+</li>
+<li><strong>finally 用途：</strong> 用于异常处理（try-catch-finally），无论是否发生异常，<code>finally</code> 代码块中的代码（如关闭资源、释放锁）<strong>一定会被执行</strong>。</li>
+</ul>
+<h4 id="5-多线程定义与区别"><a href="#5-多线程定义与区别" class="headerlink" title="5. 多线程定义与区别"></a>5. 多线程定义与区别</h4><p><strong>知识点：</strong> 线程创建方式。 <strong>解答：</strong></p>
+<ul>
+<li><strong>两种方法：</strong><ol>
+<li>继承 <code>Thread</code> 类，重写 <code>run()</code> 方法。</li>
+<li>实现 <code>Runnable</code> 接口，实现 <code>run()</code> 方法。</li>
+</ol>
+</li>
+<li><strong>区别：</strong> 继承 <code>Thread</code> 导致类无法继承其他父类（Java单继承局限）；实现 <code>Runnable</code> 更灵活，且适合多个线程共享同一个资源对象。</li>
+<li><strong>场景判断：</strong> 如果该线程类已经继承了某个父类，<strong>必须使用实现 Runnable 接口</strong> 的方式。</li>
+</ul>
+<h4 id="6-方法重载-Overload-vs-重写-Override"><a href="#6-方法重载-Overload-vs-重写-Override" class="headerlink" title="6. 方法重载 (Overload) vs 重写 (Override)"></a>6. 方法重载 (Overload) vs 重写 (Override)</h4><p><strong>知识点：</strong> 多态性。 <strong>解答：</strong></p>
+<ul>
+<li><p><strong>程序分析：</strong></p>
+<ul>
+<li><code>public double getScore(Double score)</code></li>
+<li><code>private float getScore(Double score)</code></li>
+<li>这两者<strong>不能</strong>构成重载，且会<strong>编译报错</strong>。因为重载要求参数列表不同，而这里参数完全相同，仅返回值和修饰符不同，Java 编译器无法区分。</li>
+<li>第三个方法 <code>private double getScore(double score)</code> 与前两个构成重载（参数类型 <code>double</code> vs <code>Double</code> 不同）。</li>
+</ul>
+</li>
+<li><p><strong>重载 vs 重写：</strong></p>
+<ul>
+<li><strong>重载 (Overload)：</strong> 同一个类中，方法名相同，参数列表不同。</li>
+<li><strong>重写 (Override)：</strong> 子类重新定义父类的方法，方法名、参数、返回值必须一致。</li>
+</ul>
+</li>
+<li><p><strong>重写示例：</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Undergraduate extends Student &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public double getScore(Double score) &#123;</span><br><span class="line">        return score * 1.0; // 修改计算逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="7-Map-接口-HashMap-vs-TreeMap"><a href="#7-Map-接口-HashMap-vs-TreeMap" class="headerlink" title="7. Map 接口 (HashMap vs TreeMap)"></a>7. Map 接口 (HashMap vs TreeMap)</h4><p><strong>知识点：</strong> Map 集合特性。 <strong>解答：</strong></p>
+<ul>
+<li><strong>Map 特点：</strong> 存储键值对（Key-Value），Key 不可重复。</li>
+<li><strong>区别：</strong><ul>
+<li><strong>HashMap：</strong> 基于哈希表，<strong>无序</strong>，允许 null 键和 null 值，查询效率高。</li>
+<li><strong>TreeMap：</strong> 基于红黑树，<strong>有序</strong>（按 Key 自然排序或自定义排序），不允许 null 键。</li>
+</ul>
+</li>
+</ul>
+<h4 id="8-String-vs-StringBuilder"><a href="#8-String-vs-StringBuilder" class="headerlink" title="8. String vs StringBuilder"></a>8. String vs StringBuilder</h4><p><strong>知识点：</strong> 字符串不可变性。 <strong>解答：</strong></p>
+<ul>
+<li><strong>运行结果：</strong> 程序一输出 <code>a</code>；程序二输出 <code>ahello</code>。</li>
+<li><strong>区别：</strong><ul>
+<li><strong>String：</strong> 是<strong>不可变</strong>对象。每次修改（如 <code>+</code>）都会产生新的 String 对象。程序一中 <code>s=&quot;a&quot;</code> 是传值，方法内 <code>s</code> 指向了新对象，原对象不变。</li>
+<li><strong>StringBuilder：</strong> 是<strong>可变</strong>对象。修改时是在原对象上操作。程序二中传递的是引用，方法内 <code>append</code> 修改了原对象的内容。</li>
+</ul>
+</li>
+<li><strong>适用场景：</strong> String 适合少量字符串操作或常量；StringBuilder 适合频繁修改、拼接字符串（如循环中拼接）。</li>
+</ul>
+<h4 id="9-异常处理"><a href="#9-异常处理" class="headerlink" title="9. 异常处理"></a>9. 异常处理</h4><p><strong>知识点：</strong> Checked Exception（受检异常）。 <strong>解答：</strong></p>
+<ul>
+<li><p><strong>错误：</strong> <code>called()</code> 声明抛出 <code>SelfException</code>（继承自 <code>Exception</code>），属于受检异常。<code>main</code> 方法调用了它，但没有处理。</p>
+</li>
+<li><p><strong>修改方案一（Try-Catch）：</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">    called();</span><br><span class="line">&#125; catch (SelfException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>修改方案二（Throws）：</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws SelfException &#123;</span><br><span class="line">    called();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="10-super-与-构造方法"><a href="#10-super-与-构造方法" class="headerlink" title="10. super 与 构造方法"></a>10. super 与 构造方法</h4><p><strong>知识点：</strong> 继承中的构造函数调用链。 <strong>解答：</strong></p>
+<ul>
+<li><p><strong>错误分析：</strong> <strong>有错误</strong>。父类 <code>Pare</code> 定义了带参构造 <code>Pare(int i)</code>，编译器就不会再提供默认无参构造 <code>Pare()</code>。子类 <code>Construct</code> 的构造方法默认会隐式调用 <code>super()</code>，但父类中不存在无参构造，导致编译失败。</p>
+</li>
+<li><p><strong>修改方案：</strong> 在 <code>Construct</code> 构造方法第一行显式调用父类构造。</p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Construct(int num) &#123;</span><br><span class="line">    super(num); // 显式调用父类构造</span><br><span class="line">    i = num;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>如果修复后运行结果：</strong> <code>10, 7</code> (子类 i 为 10，<code>getSuper</code> 返回父类的 i 为 7，前提是父类构造正确赋值了)。</p>
+</li>
+</ul>
+<h4 id="11-线程安全"><a href="#11-线程安全" class="headerlink" title="11. 线程安全"></a>11. 线程安全</h4><p><strong>知识点：</strong> 同步（Synchronization）。 <strong>解答：</strong></p>
+<ul>
+<li><p><strong>能否得到预期结果？</strong> <strong>不能</strong>。</p>
+</li>
+<li><p><strong>原因：</strong> <code>addChar</code> 方法没有同步。当线程 1 和线程 2 同时进入方法：</p>
+<ol>
+<li>可能同时读取到相同的 <code>size</code> 值。</li>
+<li>同时赋值 <code>data[size] = c</code>（导致数据覆盖）。</li>
+<li>同时执行 <code>size++</code>（导致 size 只加了 1 而不是 2）。 这也是典型的“竞态条件”（Race Condition）。</li>
+</ol>
+</li>
+<li><p><strong>修改方案：</strong> 给方法加上 <code>synchronized</code> 关键字。</p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void addChar(char c) &#123; ... &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="第二部分：编程题解答"><a href="#第二部分：编程题解答" class="headerlink" title="第二部分：编程题解答"></a>第二部分：编程题解答</h3><h4 id="1-复数类-Complex-与-ArrayList-排序"><a href="#1-复数类-Complex-与-ArrayList-排序" class="headerlink" title="1. 复数类 Complex 与 ArrayList 排序"></a>1. 复数类 Complex 与 ArrayList 排序</h4><p><strong>核心点：</strong> 类定义、集合排序、Comparator 接口。</p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">class Complex &#123;</span><br><span class="line">    private int real;</span><br><span class="line">    private int imagin;</span><br><span class="line"></span><br><span class="line">    // (2) 构造方法</span><br><span class="line">    public Complex() &#123;</span><br><span class="line">        this.real = 0;</span><br><span class="line">        this.imagin = 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Complex(int r, int i) &#123;</span><br><span class="line">        this.real = r;</span><br><span class="line">        this.imagin = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // (3) sub 方法</span><br><span class="line">    public Complex sub(Complex a) &#123;</span><br><span class="line">        return new Complex(this.real - a.real, this.imagin - a.imagin);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 为了方便打印，重写 toString</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        if (imagin &gt;= 0) return real + &quot;+&quot; + imagin + &quot;i&quot;;</span><br><span class="line">        return real + &quot;&quot; + imagin + &quot;i&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int getReal() &#123; return real; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // (4) 测试减法</span><br><span class="line">        Complex c1 = new Complex(2, 3);</span><br><span class="line">        Complex c2 = new Complex(5, 8);</span><br><span class="line">        Complex res = c1.sub(c2);</span><br><span class="line">        System.out.println(&quot;减法结果: &quot; + res); // 预期 -3-5i</span><br><span class="line"></span><br><span class="line">        // (5) ArrayList 排序</span><br><span class="line">        ArrayList&lt;Complex&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(new Complex(-2, 3));</span><br><span class="line">        list.add(new Complex(3, -5));</span><br><span class="line">        list.add(new Complex(1, 4));</span><br><span class="line"></span><br><span class="line">        // 使用 Collections.sort 和 Comparator</span><br><span class="line">        Collections.sort(list, new Comparator&lt;Complex&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public int compare(Complex o1, Complex o2) &#123;</span><br><span class="line">                // 实部从大到小排序 (o2 - o1)</span><br><span class="line">                return o2.getReal() - o1.getReal();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;排序后: &quot; + list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-接口-Solid-与-多态设计"><a href="#2-接口-Solid-与-多态设计" class="headerlink" title="2. 接口 Solid 与 多态设计"></a>2. 接口 Solid 与 多态设计</h4><p><strong>核心点：</strong> 接口实现、多态、策略模式思想。</p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">// (1) 接口与类定义</span><br><span class="line">interface Solid &#123;</span><br><span class="line">    public double calVol();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Cube implements Solid &#123;</span><br><span class="line">    double side;</span><br><span class="line">    public Cube(double side) &#123; this.side = side; &#125;</span><br><span class="line">    public double calVol() &#123; return side * side * side; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Cylinder implements Solid &#123;</span><br><span class="line">    double r, h;</span><br><span class="line">    public Cylinder(double r, double h) &#123; this.r = r; this.h = h; &#125;</span><br><span class="line">    public double calVol() &#123; return 3.14 * r * r * h; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Test &#123;</span><br><span class="line">    public void printVol(Solid s) &#123;</span><br><span class="line">        System.out.println(&quot;体积: &quot; + s.calVol());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// (2) GraphCalcu 类定义 (支持扩展)</span><br><span class="line">class GraphCalcu &#123;</span><br><span class="line">    Solid solid; // 使用接口作为成员变量，实现多态组合</span><br><span class="line"></span><br><span class="line">    // 构造方法接收任何 Solid 的实现类</span><br><span class="line">    public GraphCalcu(Solid solid) &#123;</span><br><span class="line">        this.solid = solid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public double Calcu() &#123;</span><br><span class="line">        if (solid != null) &#123;</span><br><span class="line">            return solid.calVol();</span><br><span class="line">        &#125;</span><br><span class="line">        return 0.0;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-TCP-服务器编程"><a href="#3-TCP-服务器编程" class="headerlink" title="3. TCP 服务器编程"></a>3. TCP 服务器编程</h4><p><strong>核心点：</strong> ServerSocket, Socket, 多线程, IO流。</p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">import java.io.*;</span><br><span class="line">import java.net.*;</span><br><span class="line"></span><br><span class="line">public class TCPServer &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        try (ServerSocket serverSocket = new ServerSocket(8377)) &#123;</span><br><span class="line">            System.out.println(&quot;服务器启动，监听端口 8377...&quot;);</span><br><span class="line">            int clientCount = 0;</span><br><span class="line"></span><br><span class="line">            while (true) &#123;</span><br><span class="line">                Socket socket = serverSocket.accept(); // 等待客户端连接</span><br><span class="line">                clientCount++;</span><br><span class="line">                // (1) 为每个请求派发一个线程</span><br><span class="line">                new Thread(new ClientHandler(socket, clientCount)).start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ClientHandler implements Runnable &#123;</span><br><span class="line">    private Socket socket;</span><br><span class="line">    private int clientId;</span><br><span class="line"></span><br><span class="line">    public ClientHandler(Socket socket, int clientId) &#123;</span><br><span class="line">        this.socket = socket;</span><br><span class="line">        this.clientId = clientId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        try (</span><br><span class="line">            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));</span><br><span class="line">            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);</span><br><span class="line">            // (3) 追加模式写入文件</span><br><span class="line">            FileWriter fileWriter = new FileWriter(&quot;D:\\chat.txt&quot;, true);</span><br><span class="line">            PrintWriter fileOut = new PrintWriter(fileWriter, true)</span><br><span class="line">        ) &#123;</span><br><span class="line">            String msg;</span><br><span class="line">            // (2) 循环接收消息</span><br><span class="line">            while ((msg = in.readLine()) != null) &#123;</span><br><span class="line">                // (4) 处理 &quot;Bye&quot;</span><br><span class="line">                if (&quot;Bye&quot;.equalsIgnoreCase(msg)) &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                // 处理回复消息</span><br><span class="line">                String response = &quot;Client&quot; + clientId + &quot;, &quot; + msg;</span><br><span class="line">                out.println(response);</span><br><span class="line"></span><br><span class="line">                // 保存到文件</span><br><span class="line">                synchronized(TCPServer.class) &#123; // 简单加锁防止文件写入冲突</span><br><span class="line">                    fileOut.println(&quot;收到 Client&quot; + clientId + &quot;: &quot; + msg);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            try &#123; socket.close(); &#125; catch (IOException e) &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="第三部分：备考方向总结"><a href="#第三部分：备考方向总结" class="headerlink" title="第三部分：备考方向总结"></a>第三部分：备考方向总结</h3><p>通过这份真题，可以看出考试的侧重点非常清晰。建议你在接下来的复习中抓住以下几个核心模块：</p>
+<ol>
+<li><strong>面向对象核心 (OOP) —— 重中之重</strong><ul>
+<li><strong>概念理解：</strong> 必须彻底搞懂 <strong>重载 vs 重写</strong>、<strong>抽象类 vs 接口</strong>、<strong>值传递</strong>。这些是必考题。</li>
+<li><strong>关键字：</strong> <code>static</code>, <code>this</code>, <code>super</code>, <code>final</code> 的用法要烂熟于心。</li>
+<li><strong>构造函数：</strong> 特别是继承关系下的构造函数调用顺序（如第 10 题）。</li>
+</ul>
+</li>
+<li><strong>集合框架 (Collections)</strong><ul>
+<li><strong>API 使用：</strong> 能够熟练使用 <code>ArrayList</code> 和 <code>HashMap</code> 进行增删改查。</li>
+<li><strong>内部原理：</strong> 知道 <code>LinkedList</code> 和 <code>ArrayList</code> 的区别，<code>HashMap</code> 和 <code>TreeMap</code> 的区别。</li>
+<li><strong>排序：</strong> 掌握 <code>Comparable</code> 和 <code>Comparator</code> 接口的写法（如编程题第 1 题）。</li>
+</ul>
+</li>
+<li><strong>多线程 (Multithreading)</strong><ul>
+<li><strong>实现方式：</strong> 继承 <code>Thread</code> vs 实现 <code>Runnable</code>。</li>
+<li><strong>线程安全：</strong> 理解什么是竞态条件，以及如何使用 <code>synchronized</code> 解决（如第 11 题）。</li>
+</ul>
+</li>
+<li><strong>IO 流与网络编程</strong><ul>
+<li><strong>IO：</strong> 掌握文件读写（<code>FileReader/Writer</code> 或 <code>BufferedReader/PrintWriter</code>）。</li>
+<li><strong>Socket：</strong> 能够默写出标准的 TCP Server&#x2F;Client 结构（<code>ServerSocket</code> -&gt; <code>accept</code> -&gt; <code>socket</code> -&gt; <code>InputStream/OutputStream</code>）。</li>
+</ul>
+</li>
+</ol>
+<p><strong>建议复习策略：</strong> 先花时间把上面的<strong>编程题代码</strong>亲手敲一遍并运行通过，这能覆盖 60% 的知识点。然后针对<strong>简答题</strong>中的概念进行背诵和理解。祝你考试顺利！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">http://example.com/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">Ling的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">期末复习</a></div><div class="post-share"><div class="social-share" data-image="/img/2.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/12/09/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/3.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%80%E7%AD%94%E4%B8%8E%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">第一部分：简答与程序分析题解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%88%E5%80%BC%E4%BC%A0%E9%80%92-vs-%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1. 参数传递（值传递 vs 引用传递）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%8A%BD%E8%B1%A1%E7%B1%BB-vs-%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.2.</span> <span class="toc-text">2. 抽象类 vs 接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ArrayList-vs-LinkedList"><span class="toc-number">1.3.</span> <span class="toc-text">3. ArrayList vs LinkedList</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-final-%E4%B8%8E-finally"><span class="toc-number">1.4.</span> <span class="toc-text">4. final 与 finally</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.</span> <span class="toc-text">5. 多线程定义与区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD-Overload-vs-%E9%87%8D%E5%86%99-Override"><span class="toc-number">1.6.</span> <span class="toc-text">6. 方法重载 (Overload) vs 重写 (Override)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-Map-%E6%8E%A5%E5%8F%A3-HashMap-vs-TreeMap"><span class="toc-number">1.7.</span> <span class="toc-text">7. Map 接口 (HashMap vs TreeMap)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-String-vs-StringBuilder"><span class="toc-number">1.8.</span> <span class="toc-text">8. String vs StringBuilder</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.9.</span> <span class="toc-text">9. 异常处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-super-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">1.10.</span> <span class="toc-text">10. super 与 构造方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="toc-number">1.11.</span> <span class="toc-text">11. 线程安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%BC%96%E7%A8%8B%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">2.</span> <span class="toc-text">第二部分：编程题解答</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%A4%8D%E6%95%B0%E7%B1%BB-Complex-%E4%B8%8E-ArrayList-%E6%8E%92%E5%BA%8F"><span class="toc-number">2.1.</span> <span class="toc-text">1. 复数类 Complex 与 ArrayList 排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%8E%A5%E5%8F%A3-Solid-%E4%B8%8E-%E5%A4%9A%E6%80%81%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.</span> <span class="toc-text">2. 接口 Solid 与 多态设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-TCP-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B"><span class="toc-number">2.3.</span> <span class="toc-text">3. TCP 服务器编程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E5%A4%87%E8%80%83%E6%96%B9%E5%90%91%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">第三部分：备考方向总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习"><img src="/img/2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java期末复习"/></a><div class="content"><a class="title" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习">Java期末复习</a><time datetime="2025-12-10T10:36:00.000Z" title="发表于 2025-12-10 18:36:00">2025-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/09/hello-world/" title="Hello World">Hello World</a><time datetime="2025-12-09T12:04:27.514Z" title="发表于 2025-12-09 20:04:27">2025-12-09</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/2.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

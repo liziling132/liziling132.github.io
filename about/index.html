@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>关于我 | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="👋 你好，我是 [Ling] ☕ Java 开发者 | 🤖 AI 智能体探索者 | 🚀 终身学习者  欢迎来到我的博客！我是一名热衷于技术落地的后端开发者。从构建高可用的微服务架构，到探索 LLM（大语言模型）的智能体应用，我始终走在技术探索的路上。  🛠️ 技术栈 (Tech Stack)💻 后端核心 (Core Backend)稳扎稳打的 Java 基础与企业级开发经验。   Jav">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于我">
+<meta property="og:url" content="http://example.com/about/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="👋 你好，我是 [Ling] ☕ Java 开发者 | 🤖 AI 智能体探索者 | 🚀 终身学习者  欢迎来到我的博客！我是一名热衷于技术落地的后端开发者。从构建高可用的微服务架构，到探索 LLM（大语言模型）的智能体应用，我始终走在技术探索的路上。  🛠️ 技术栈 (Tech Stack)💻 后端核心 (Core Backend)稳扎稳打的 Java 基础与企业级开发经验。   Jav">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/2.png">
+<meta property="article:published_time" content="2023-10-27T04:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-09T16:11:46.209Z">
+<meta property="article:author" content="Ling">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/2.png"><link rel="shortcut icon" href="/img/2.png"><link rel="canonical" href="http://example.com/about/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '关于我',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'about'
+}</script>[object Object]<meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/4.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page type-about" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(/img/4.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/2.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">关于我</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="👋-你好，我是-Ling"><a href="#👋-你好，我是-Ling" class="headerlink" title="👋 你好，我是 [Ling]"></a>👋 你好，我是 [Ling]</h1><blockquote>
+<p>☕ <strong>Java 开发者</strong> | 🤖 <strong>AI 智能体探索者</strong> | 🚀 <strong>终身学习者</strong></p>
+</blockquote>
+<p>欢迎来到我的博客！我是一名热衷于技术落地的后端开发者。<br>从构建高可用的微服务架构，到探索 LLM（大语言模型）的智能体应用，我始终走在技术探索的路上。</p>
+<hr>
+<h2 id="🛠️-技术栈-Tech-Stack"><a href="#🛠️-技术栈-Tech-Stack" class="headerlink" title="🛠️ 技术栈 (Tech Stack)"></a>🛠️ 技术栈 (Tech Stack)</h2><h3 id="💻-后端核心-Core-Backend"><a href="#💻-后端核心-Core-Backend" class="headerlink" title="💻 后端核心 (Core Backend)"></a>💻 后端核心 (Core Backend)</h3><p>稳扎稳打的 Java 基础与企业级开发经验。</p>
+<ul>
+<li><img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java"> <strong>Java</strong>: 核心语言，熟悉 JUC 并发编程与 JVM 调优。</li>
+<li><img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=spring&logoColor=white" alt="Spring"> <strong>Spring Ecosystem</strong>: 熟练掌握 Spring Boot 快速开发与 Spring Cloud 微服务治理。</li>
+<li><img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white" alt="Redis"> <strong>Redis</strong>: 熟悉缓存策略、分布式锁及高并发场景下的应用。</li>
+<li>☁️ <strong>Microservices</strong>: 理解微服务架构设计，熟悉服务注册发现、配置中心与熔断降级。</li>
+</ul>
+<h3 id="🤖-AI-与大模型-AI-LLM"><a href="#🤖-AI-与大模型-AI-LLM" class="headerlink" title="🤖 AI 与大模型 (AI &amp; LLM)"></a>🤖 AI 与大模型 (AI &amp; LLM)</h3><p>正在探索将传统后端与 AIGC 能力结合的无限可能。</p>
+<ul>
+<li>🦜🔗 <strong>LangChain</strong>: 熟练使用 LangChain 编排 LLM 逻辑。</li>
+<li>🕵️ <strong>Agents</strong>: 致力于构建自主智能体（Autonomous Agents），实现工具调用与复杂任务规划。</li>
+<li>🧠 <strong>RAG</strong>: 了解检索增强生成技术，搭建私有知识库问答系统。</li>
+</ul>
+<hr>
+<h2 id="💡-我在做什么-What-I-Do"><a href="#💡-我在做什么-What-I-Do" class="headerlink" title="💡 我在做什么 (What I Do)"></a>💡 我在做什么 (What I Do)</h2><p>我不仅仅是写代码，更关注如何用技术解决实际问题。我的关注点包括：</p>
+<ol>
+<li><strong>后端架构现代化</strong>：如何设计高内聚低耦合的微服务系统。</li>
+<li><strong>AI 应用落地</strong>：如何将 LangChain 智能体集成到 Spring Boot 应用中，让 Java 应用拥有“大脑”。</li>
+<li><strong>效能提升</strong>：利用 AI 辅助编码与自动化运维。</li>
+</ol>
+<hr>
+<h2 id="📬-联系我-Contact"><a href="#📬-联系我-Contact" class="headerlink" title="📬 联系我 (Contact)"></a>📬 联系我 (Contact)</h2><p>如果你对 <strong>Java 微服务</strong> 或 <strong>AI Agent 开发</strong> 感兴趣，欢迎和我交流！</p>
+<ul>
+<li><strong>Github</strong>: [(<a target="_blank" rel="noopener" href="https://github.com/liziling132)]">https://github.com/liziling132)]</a></li>
+<li><strong>Email</strong>: [<a href="mailto:&#51;&#x34;&#55;&#51;&#50;&#54;&#x38;&#54;&#x38;&#x38;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#x6d;">3473268688@qq.com</a>]</li>
+<li><strong>WeChat</strong>: [13476151478] (可选)</li>
+</ul>
+<hr>
+<p><em>“Stay Hungry, Stay Foolish. Code with AI.”</em></p>
+</div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/3.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习"><img src="/img/2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java期末复习"/></a><div class="content"><a class="title" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习">Java期末复习</a><time datetime="2025-12-10T10:36:00.000Z" title="发表于 2025-12-10 18:36:00">2025-12-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/09/hello-world/" title="Hello World">Hello World</a><time datetime="2025-12-09T12:04:27.514Z" title="发表于 2025-12-09 20:04:27">2025-12-09</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Java/"><span class="card-category-list-name">Java</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" style="font-size: 1.1em; color: #999">期末复习</a> <a href="/tags/Java/" style="font-size: 1.1em; color: #999">Java</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">2</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-12-10T02:39:06.735Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/4.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
