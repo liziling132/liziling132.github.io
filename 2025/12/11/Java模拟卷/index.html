@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java 期末复习全套资料：模拟卷 + 答案详解 | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="123456789101112131415161718192021222324252627# 第一部分：Java 期末模拟仿真卷 (试题卷)**考试说明：** 本试卷对标期末真题难度，覆盖面向对象、集合、多线程、IO流及异常处理核心考点。建议闭卷限时 120 分钟完成。---## 一、简答与程序分析题 (每题 5 分，共 55 分)**1. 分析下列程序，并简述 String 对象的不可变性（Im">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 期末复习全套资料：模拟卷 + 答案详解">
+<meta property="og:url" content="http://example.com/2025/12/11/Java%E6%A8%A1%E6%8B%9F%E5%8D%B7/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="123456789101112131415161718192021222324252627# 第一部分：Java 期末模拟仿真卷 (试题卷)**考试说明：** 本试卷对标期末真题难度，覆盖面向对象、集合、多线程、IO流及异常处理核心考点。建议闭卷限时 120 分钟完成。---## 一、简答与程序分析题 (每题 5 分，共 55 分)**1. 分析下列程序，并简述 String 对象的不可变性（Im">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg">
+<meta property="article:published_time" content="2025-12-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-11T11:52:38.190Z">
+<meta property="article:author" content="Ling">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="期末复习">
+<meta property="article:tag" content="答案">
+<meta property="article:tag" content="试题">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Java 期末复习全套资料：模拟卷 + 答案详解",
+  "url": "http://example.com/2025/12/11/Java%E6%A8%A1%E6%8B%9F%E5%8D%B7/",
+  "image": "http://example.com/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg",
+  "datePublished": "2025-12-10T16:00:00.000Z",
+  "dateModified": "2025-12-11T11:52:38.190Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "http://example.com/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/2.png"><link rel="canonical" href="http://example.com/2025/12/11/Java%E6%A8%A1%E6%8B%9F%E5%8D%B7/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java 期末复习全套资料：模拟卷 + 答案详解',
+  isHighlightShrink: true,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/5.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/img/loading.png" data-lazy-src="/img/2.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Java 期末复习全套资料：模拟卷 + 答案详解</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Java 期末复习全套资料：模拟卷 + 答案详解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-10T16:00:00.000Z" title="发表于 2025-12-11 00:00:00">2025-12-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-11T11:52:38.190Z" title="更新于 2025-12-11 19:52:38">2025-12-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"># 第一部分：Java 期末模拟仿真卷 (试题卷)</span><br><span class="line"></span><br><span class="line">**考试说明：** 本试卷对标期末真题难度，覆盖面向对象、集合、多线程、IO流及异常处理核心考点。建议闭卷限时 120 分钟完成。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 一、简答与程序分析题 (每题 5 分，共 55 分)</span><br><span class="line"></span><br><span class="line">**1. 分析下列程序，并简述 String 对象的不可变性（Immutability），并给出运行结果。**</span><br><span class="line"></span><br><span class="line">​```java</span><br><span class="line">public class StringTest &#123;</span><br><span class="line">    public static void change(String s, char[] c) &#123;</span><br><span class="line">        s = &quot;changed&quot;;</span><br><span class="line">        c[0] = &#x27;g&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        String str = &quot;good&quot;;</span><br><span class="line">        char[] ch = &#123; &#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27; &#125;;</span><br><span class="line">        change(str, ch);</span><br><span class="line">        System.out.print(str + &quot; and &quot;);</span><br><span class="line">        System.out.print(ch);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 简述 Java 中 <code>static</code> 关键字的作用。请分别说明 static 修饰成员变量、成员方法以及静态代码块时的特点和执行时机。</strong></p>
+<p><strong>3. 在处理大量无需重复且不要求顺序的数据时，你会选择 Java 集合框架中的 <code>HashSet</code> 还是 <code>TreeSet</code>？请从底层数据结构（Hash表 vs 红黑树）和性能角度（时间复杂度）进行论述。</strong></p>
+<p><strong>4. 简述 Java 中四种访问权限修饰符（private, default&#x2F;friendly, protected, public）的作用范围区别。</strong></p>
+<p><strong>5. 简述线程生命周期中的 <code>sleep()</code> 方法和 <code>wait()</code> 方法的区别。如果线程类已经实现了 <code>Runnable</code> 接口，是否还能通过继承 <code>Thread</code> 类的方式创建线程？为什么？</strong></p>
+<p><strong>6. 分析下列程序，指出多态在其中的体现。请问 output 方法中的 <code>b.show(b)</code> 调用的是哪个类的方法？并写出最终的输出结果。</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class A &#123;</span><br><span class="line">    public String show(D obj) &#123; return (&quot;A and D&quot;); &#125;</span><br><span class="line">    public String show(A obj) &#123; return (&quot;A and A&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">class B extends A &#123;</span><br><span class="line">    public String show(B obj) &#123; return (&quot;B and B&quot;); &#125;</span><br><span class="line">    public String show(A obj) &#123; return (&quot;B and A&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">class C extends B &#123;&#125;</span><br><span class="line">class D extends B &#123;&#125;</span><br><span class="line"></span><br><span class="line">public class PolyTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        A a1 = new A();</span><br><span class="line">        A a2 = new B();</span><br><span class="line">        B b = new B();</span><br><span class="line">        C c = new C();</span><br><span class="line">        D d = new D();</span><br><span class="line">        System.out.println(a1.show(b)); // ①</span><br><span class="line">        System.out.println(a2.show(b)); // ②</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>7. 简述 <code>Hashtable</code> 与 <code>HashMap</code> 的区别（提示：从线程安全、null 值支持、效率三个方面回答）。</strong></p>
+<p><strong>8. 分析下列程序关于 <code>try-catch-finally</code> 块中 <code>return</code> 语句的执行顺序，并写出运行结果。</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class ReturnTest &#123;</span><br><span class="line">    public static int test() &#123;</span><br><span class="line">        int x = 1;</span><br><span class="line">        try &#123;</span><br><span class="line">            return x;</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            ++x;</span><br><span class="line">            System.out.print(&quot;finally run, &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        System.out.println(&quot;result=&quot; + test());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>9. 简述 Java 中的受检异常（Checked Exception）和运行时异常（Runtime Exception）的区别，并各举一个例子。</strong></p>
+<p><strong>10. 分析下列程序的初始化顺序（静态代码块 vs 构造代码块 vs 构造方法），并写出运行结果。</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Base &#123;</span><br><span class="line">    static &#123; System.out.print(&quot;Base Static, &quot;); &#125;</span><br><span class="line">    public Base() &#123; System.out.print(&quot;Base Const, &quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line">class Sub extends Base &#123;</span><br><span class="line">    static &#123; System.out.print(&quot;Sub Static, &quot;); &#125;</span><br><span class="line">    &#123; System.out.print(&quot;Sub Block, &quot;); &#125;</span><br><span class="line">    public Sub() &#123; System.out.print(&quot;Sub Const&quot;); &#125;</span><br><span class="line">    </span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        new Sub();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>11. 下列代码试图实现一个简单的银行账户取款操作。在多线程环境下，该代码是否存在线程安全问题？如果存在，请指出问题所在，并使用 <code>synchronized</code> 关键字给出一种修改方案（可以修饰方法或代码块）。</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Account &#123;</span><br><span class="line">    private int balance = 1000;</span><br><span class="line">    public void withdraw(int amount) &#123;</span><br><span class="line">        if (balance &gt;= amount) &#123;</span><br><span class="line">            try &#123; Thread.sleep(10); &#125; catch (Exception e) &#123;&#125; // 模拟网络延迟</span><br><span class="line">            balance = balance - amount;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、编程题-共-45-分"><a href="#二、编程题-共-45-分" class="headerlink" title="二、编程题 (共 45 分)"></a>二、编程题 (共 45 分)</h2><p><strong>1. (15分) 集合与排序</strong></p>
+<p>定义一个学生类 <code>Student</code>，满足以下要求：</p>
+<ul>
+<li>(1) 包含成员变量：姓名 <code>name</code> (String)，成绩 <code>score</code> (int)。</li>
+<li>(2) 提供带参构造方法初始化姓名和成绩。</li>
+<li>(3) 覆写 <code>toString()</code> 方法，返回格式为 “Name: xxx, Score: xxx”。</li>
+<li>(4) 在 <code>main</code> 方法中，创建 4 个学生对象存入 <code>ArrayList</code> 中。</li>
+<li>(5) <strong>核心要求</strong>：使用 <code>Collections.sort</code> 方法对学生按照<strong>成绩从高到低</strong>进行排序。如果成绩相同，则按照姓名的字典序（字母顺序）排列。最后遍历集合打印排序后的结果。</li>
+</ul>
+<p><strong>2. (15分) 接口与多态应用</strong></p>
+<p>为了模拟计算机连接不同 USB 设备的功能，请设计以下类和接口：</p>
+<ul>
+<li>(1) 定义一个接口 <code>USB</code>，包含两个抽象方法：<code>void open()</code> (开启设备) 和 <code>void close()</code> (关闭设备)。</li>
+<li>(2) 定义两个实现类 <code>Mouse</code> (鼠标) 和 <code>Keyboard</code> (键盘)，它们都实现 <code>USB</code> 接口。<ul>
+<li><code>Mouse</code> 的 <code>open</code> 打印 “鼠标连接”，<code>close</code> 打印 “鼠标断开”。</li>
+<li><code>Keyboard</code> 的 <code>open</code> 打印 “键盘连接”，<code>close</code> 打印 “键盘断开”。</li>
+</ul>
+</li>
+<li>(3) 定义一个类 <code>Laptop</code> (笔记本电脑)，包含一个方法 <code>public void useUSB(USB usb)</code>。<ul>
+<li>该方法首先调用传入设备的 <code>open()</code> 方法。</li>
+<li><strong>进阶考点</strong>：使用 <code>instanceof</code> 判断传入的设备类型：如果是 <code>Mouse</code>，额外打印 “进行点击操作”；如果是 <code>Keyboard</code>，额外打印 “进行打字操作”。</li>
+<li>最后调用设备的 <code>close()</code> 方法。</li>
+</ul>
+</li>
+<li>(4) 编写 <code>main</code> 方法，实例化 <code>Laptop</code>，并分别测试插入 <code>Mouse</code> 和 <code>Keyboard</code> 对象。</li>
+</ul>
+<p><strong>3. (15分) IO 流与文件处理</strong></p>
+<p>编写一个 Java 程序实现简单的文件内容拷贝与处理功能：</p>
+<ul>
+<li>(1) 程序需要读取当前目录下名为 <code>source.txt</code> 的文本文件（假设文件已存在）。</li>
+<li>(2) 使用字符流（如 <code>FileReader</code>&#x2F;<code>BufferedReader</code>）逐行读取文件内容。</li>
+<li>(3) 将读取到的每一行内容转换成<strong>大写字母</strong> (UpperCase)。</li>
+<li>(4) 将转换后的内容写入到当前目录下的 <code>dest.txt</code> 文件中（使用 <code>FileWriter</code>&#x2F;<code>PrintWriter</code>）。</li>
+<li>(5) <strong>核心要求</strong>：必须使用标准的 <code>try-catch-finally</code> 结构（或 try-with-resources）来处理 IO 异常，并确保在 <code>finally</code> 块中正确关闭输入流和输出流，防止资源泄露。</li>
+</ul>
+<h1 id="第二部分：参考答案与详细解析"><a href="#第二部分：参考答案与详细解析" class="headerlink" title="第二部分：参考答案与详细解析"></a>第二部分：参考答案与详细解析</h1><h2 id="一、简答与程序分析题答案"><a href="#一、简答与程序分析题答案" class="headerlink" title="一、简答与程序分析题答案"></a>一、简答与程序分析题答案</h2><p><strong>1. 答案：</strong></p>
+<ul>
+<li><strong>运行结果：</strong> <code>good and gbc</code></li>
+<li><strong>解析：</strong> Java 中 <code>String</code> 是不可变对象。<code>change</code> 方法中的 <code>s</code> 是 <code>str</code> 引用的副本，<code>s = &quot;changed&quot;</code> 只是将副本指向了新字符串，不影响原 <code>str</code>。而数组是引用类型，<code>c</code> 和 <code>ch</code> 指向堆中同一个数组，修改 <code>c[0]</code> 会直接改变原数组内容。</li>
+</ul>
+<p><strong>2. 答案：</strong></p>
+<ul>
+<li><strong>变量：</strong> 类变量，全类共享一份，随着类的加载而创建。</li>
+<li><strong>方法：</strong> 静态方法，通过类名直接调用，不能访问非静态成员（因为没有 <code>this</code>）。</li>
+<li><strong>代码块：</strong> 静态代码块，在类被 JVM 加载时执行，且只执行一次，常用于初始化静态资源。</li>
+</ul>
+<p><strong>3. 答案：</strong></p>
+<ul>
+<li><strong>选择：</strong> <code>HashSet</code>。</li>
+<li><strong>原因：</strong> <code>HashSet</code> 底层是哈希表，插入和查找的时间复杂度接近 $O(1)$，效率极高。而 <code>TreeSet</code> 底层是红黑树，虽然有序，但时间复杂度为 $O(\log n)$。题目明确说“不要求顺序”，因此 <code>HashSet</code> 是更优解。</li>
+</ul>
+<p><strong>4. 答案：</strong></p>
+<ul>
+<li><code>private</code>：仅本类可见。</li>
+<li><code>default</code>：本类 + 同包可见。</li>
+<li><code>protected</code>：本类 + 同包 + 不同包的子类可见。</li>
+<li><code>public</code>：所有类可见。</li>
+</ul>
+<p><strong>5. 答案：</strong></p>
+<ul>
+<li><strong>区别：</strong><ul>
+<li><code>sleep()</code>：Thread 类静态方法，线程暂停执行，<strong>不会释放锁</strong>。</li>
+<li><code>wait()</code>：Object 类方法，必须在同步块中调用，线程暂停执行，<strong>会释放锁</strong>。</li>
+</ul>
+</li>
+<li><strong>能否继承 Thread：</strong> 不能。Java 是单继承机制，如果类已经实现了 <code>Runnable</code> 接口，它通常是为了解决已经继承了其他父类的问题，或者是为了资源共享。如果该类已经有了父类（非 Thread），则无法再继承 Thread。</li>
+</ul>
+<p><strong>6. 答案：</strong></p>
+<ul>
+<li><strong>运行结果：</strong><ul>
+<li>① <code>A and A</code></li>
+<li>② <code>B and A</code></li>
+</ul>
+</li>
+<li><strong>解析（难点）：</strong><ul>
+<li><code>a1.show(b)</code>：<code>a1</code> 是 A 类，<code>b</code> 是 B 类。A 中没有 <code>show(B)</code>，只有 <code>show(A)</code>。B 是 A 的子类，所以匹配 <code>show(A)</code>。结果 <code>A and A</code>。</li>
+<li><code>a2.show(b)</code>：<code>a2</code> 引用类型是 A，实际对象是 B。编译看左边（A 有 <code>show(A)</code>），运行看右边（B 覆写了 <code>show(A)</code>）。所以调用 B 的 <code>show(A)</code>。结果 <code>B and A</code>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>7. 答案：</strong></p>
+<ul>
+<li><strong>线程安全：</strong> Hashtable 是线程安全的（synchronized），HashMap 不是。</li>
+<li><strong>Null 值：</strong> Hashtable 不允许 null 键&#x2F;值，HashMap 允许一个 null 键和多个 null 值。</li>
+<li><strong>效率：</strong> HashMap 效率高于 Hashtable（因为没有同步锁开销）。</li>
+</ul>
+<p><strong>8. 答案：</strong></p>
+<ul>
+<li><strong>运行结果：</strong> <code>finally run, result=1</code></li>
+<li><strong>解析：</strong> <code>try</code> 块中的 <code>return x</code> 会先将 1 放入临时栈空间准备返回。然后执行 <code>finally</code>，<code>x</code> 变为 2。但在 <code>finally</code> 执行完后，方法返回的依然是之前暂存的 1。</li>
+</ul>
+<p><strong>9. 答案：</strong></p>
+<ul>
+<li><strong>Checked Exception：</strong> 编译时必须处理（try-catch 或 throws），否则报错。例：<code>IOException</code>, <code>SQLException</code>。</li>
+<li><strong>Runtime Exception：</strong> 编译时不强制处理，通常是程序逻辑错误。例：<code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code>。</li>
+</ul>
+<p><strong>10. 答案：</strong></p>
+<ul>
+<li><strong>运行结果：</strong> <code>Base Static, Sub Static, Base Const, Sub Block, Sub Const</code></li>
+<li><strong>解析：</strong><ol>
+<li>父类静态块 (<code>Base Static</code>)</li>
+<li>子类静态块 (<code>Sub Static</code>)</li>
+<li>父类构造 (<code>Base Const</code>)</li>
+<li>子类构造代码块 (<code>Sub Block</code>)</li>
+<li>子类构造 (<code>Sub Const</code>)</li>
+</ol>
+</li>
+</ul>
+<p><strong>11. 答案：</strong></p>
+<ul>
+<li><p><strong>存在问题：</strong> 典型的“读-改-写”原子性问题。两个线程可能同时判断余额充足，导致超额取款。</p>
+</li>
+<li><p><strong>修改方案：</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public synchronized void withdraw(int amount) &#123; // 加 synchronized</span><br><span class="line">    if (balance &gt;= amount) &#123;</span><br><span class="line">        try &#123; Thread.sleep(10); &#125; catch (Exception e) &#123;&#125;</span><br><span class="line">        balance = balance - amount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h2 id="二、编程题参考代码"><a href="#二、编程题参考代码" class="headerlink" title="二、编程题参考代码"></a>二、编程题参考代码</h2><p><strong>1. 集合与排序</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">class Student &#123;</span><br><span class="line">    String name;</span><br><span class="line">    int score;</span><br><span class="line"></span><br><span class="line">    public Student(String name, int score) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.score = score;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Name: &quot; + name + &quot;, Score: &quot; + score;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class SortTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        ArrayList&lt;Student&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">        list.add(new Student(&quot;Alice&quot;, 85));</span><br><span class="line">        list.add(new Student(&quot;Bob&quot;, 90));</span><br><span class="line">        list.add(new Student(&quot;Charlie&quot;, 85));</span><br><span class="line">        list.add(new Student(&quot;David&quot;, 95));</span><br><span class="line"></span><br><span class="line">        // 核心排序逻辑</span><br><span class="line">        Collections.sort(list, new Comparator&lt;Student&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public int compare(Student o1, Student o2) &#123;</span><br><span class="line">                // 1. 先按成绩降序 (o2 - o1)</span><br><span class="line">                if (o1.score != o2.score) &#123;</span><br><span class="line">                    return o2.score - o1.score;</span><br><span class="line">                &#125;</span><br><span class="line">                // 2. 成绩相同按名字升序 (String 自带 compareTo)</span><br><span class="line">                return o1.name.compareTo(o2.name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        for (Student s : list) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 接口与多态应用</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">interface USB &#123;</span><br><span class="line">    void open();</span><br><span class="line">    void close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Mouse implements USB &#123;</span><br><span class="line">    public void open() &#123; System.out.println(&quot;鼠标连接&quot;); &#125;</span><br><span class="line">    public void close() &#123; System.out.println(&quot;鼠标断开&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Keyboard implements USB &#123;</span><br><span class="line">    public void open() &#123; System.out.println(&quot;键盘连接&quot;); &#125;</span><br><span class="line">    public void close() &#123; System.out.println(&quot;键盘断开&quot;); &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Laptop &#123;</span><br><span class="line">    public void useUSB(USB usb) &#123;</span><br><span class="line">        usb.open();</span><br><span class="line">        // 进阶考点：instanceof 向下转型</span><br><span class="line">        if (usb instanceof Mouse) &#123;</span><br><span class="line">            System.out.println(&quot;进行点击操作&quot;);</span><br><span class="line">        &#125; else if (usb instanceof Keyboard) &#123;</span><br><span class="line">            System.out.println(&quot;进行打字操作&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        usb.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class InterfaceTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Laptop laptop = new Laptop();</span><br><span class="line">        laptop.useUSB(new Mouse());</span><br><span class="line">        System.out.println(&quot;---&quot;);</span><br><span class="line">        laptop.useUSB(new Keyboard());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. IO 流与文件处理 (Try-with-Resources 写法)</strong></p>
+<p>Java</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import java.io.*;</span><br><span class="line"></span><br><span class="line">public class FileCopyTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 使用 try-with-resources 自动关闭资源 (Java 7+)</span><br><span class="line">        // 多个资源中间用分号隔开</span><br><span class="line">        try (</span><br><span class="line">            BufferedReader reader = new BufferedReader(new FileReader(&quot;source.txt&quot;));</span><br><span class="line">            PrintWriter writer = new PrintWriter(new FileWriter(&quot;dest.txt&quot;))</span><br><span class="line">        ) &#123;</span><br><span class="line">            String line;</span><br><span class="line">            while ((line = reader.readLine()) != null) &#123;</span><br><span class="line">                // 转大写</span><br><span class="line">                String upperLine = line.toUpperCase();</span><br><span class="line">                // 写入目标文件</span><br><span class="line">                writer.println(upperLine);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(&quot;文件拷贝与处理完成！&quot;);</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            System.out.println(&quot;文件读写发生错误&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        // 不需要 finally 手动 close，大括号结束自动释放</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/12/11/Java%E6%A8%A1%E6%8B%9F%E5%8D%B7/">http://example.com/2025/12/11/Java%E6%A8%A1%E6%8B%9F%E5%8D%B7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">Ling的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">期末复习</a><a class="post-meta__tags" href="/tags/%E8%AF%95%E9%A2%98/">试题</a><a class="post-meta__tags" href="/tags/%E7%AD%94%E6%A1%88/">答案</a></div><div class="post-share"><div class="social-share" data-image="/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/11.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Java期末复习</div></div><div class="info-2"><div class="info-item-1">这份试卷涵盖了Java基础语法的核心重点，包括面向对象（OOP）、集合框架、多线程、异常处理以及IO&#x2F;网络编程。 下面我将分三个部分为你详细解析：第一部分是对简答&#x2F;分析题（1-11题）的解析，第二部分是三道编程大题的参考代码，第三部分是针对这份真题总结的备考方向。  第一部分：简答与程序分析题解析1. 参数传递（值传递 vs 引用传递）知识点： Java中参数传递只有“值传递”。基本数据类型传递的是数值的拷贝，引用数据类型传递的是地址（引用）的拷贝。 解析：  modifyValue 方法中： int val 是基本类型，方法内修改 val 不会影响 main 方法中的 count。 IntClass s 是引用类型，方法内通过 s.value = val 修改了对象内部的属性，这会直接影响 main 方法中的对象 a。 运行结果：    Plaintext 1230      // a 初始化后 value 默认为 0100    // 方法调用修改了对象 a 的 value100    // 基本类型 count 未被修改  2. 抽象类 vs 接口知识点...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/11.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-10</div><div class="info-item-2">Java期末复习</div></div><div class="info-2"><div class="info-item-1">这份试卷涵盖了Java基础语法的核心重点，包括面向对象（OOP）、集合框架、多线程、异常处理以及IO&#x2F;网络编程。 下面我将分三个部分为你详细解析：第一部分是对简答&#x2F;分析题（1-11题）的解析，第二部分是三道编程大题的参考代码，第三部分是针对这份真题总结的备考方向。  第一部分：简答与程序分析题解析1. 参数传递（值传递 vs 引用传递）知识点： Java中参数传递只有“值传递”。基本数据类型传递的是数值的拷贝，引用数据类型传递的是地址（引用）的拷贝。 解析：  modifyValue 方法中： int val 是基本类型，方法内修改 val 不会影响 main 方法中的 count。 IntClass s 是引用类型，方法内通过 s.value = val 修改了对象内部的属性，这会直接影响 main 方法中的对象 a。 运行结果：    Plaintext 1230      // a 初始化后 value 默认为 0100    // 方法调用修改了对象 a 的 value100    // 基本类型 count 未被修改  2. 抽象类 vs 接口知识点...</div></div></div></a><a class="pagination-related" href="/2025/12/10/%E6%9C%9F%E6%9C%AB%E7%9C%9F%E9%A2%98/" title="Java期末真题"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/8.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-10</div><div class="info-item-2">Java期末真题</div></div><div class="info-2"><div class="info-item-1">Java 考试真题卷第一部分：简答与程序分析题1. 分析下列程序，简述 Java 对象和基本数据类型作为参数传递时的区别，并给出运行结果。 Java 12345678910111213141516171819class IntClass &#123;    int value;&#125;public class RunIntClass &#123;    public static void modifyValue(int val, IntClass s) &#123;        s.value = val;        val += val;    &#125;    public static void main(String[] args) &#123;        int count = 100;        IntClass a = new IntClass();        System.out.println(a.value); // 打印        modifyValue(count, a);       // 方法调用        Syste...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liziling132"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/3.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E7%A8%8B%E9%A2%98-%E5%85%B1-45-%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">二、编程题 (共 45 分)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%E4%B8%8E%E8%AF%A6%E7%BB%86%E8%A7%A3%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">第二部分：参考答案与详细解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AE%80%E7%AD%94%E4%B8%8E%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90%E9%A2%98%E7%AD%94%E6%A1%88"><span class="toc-number">2.1.</span> <span class="toc-text">一、简答与程序分析题答案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E7%A8%8B%E9%A2%98%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81"><span class="toc-number">2.2.</span> <span class="toc-text">二、编程题参考代码</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/12/11/Java%E6%A8%A1%E6%8B%9F%E5%8D%B7/" title="Java 期末复习全套资料：模拟卷 + 答案详解"><img src= "/img/loading.png" data-lazy-src="/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java 期末复习全套资料：模拟卷 + 答案详解"/></a><div class="content"><a class="title" href="/2025/12/11/Java%E6%A8%A1%E6%8B%9F%E5%8D%B7/" title="Java 期末复习全套资料：模拟卷 + 答案详解">Java 期末复习全套资料：模拟卷 + 答案详解</a><time datetime="2025-12-10T16:00:00.000Z" title="发表于 2025-12-11 00:00:00">2025-12-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习"><img src= "/img/loading.png" data-lazy-src="/img/11.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java期末复习"/></a><div class="content"><a class="title" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习">Java期末复习</a><time datetime="2025-12-10T07:06:00.000Z" title="发表于 2025-12-10 15:06:00">2025-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/10/%E6%9C%9F%E6%9C%AB%E7%9C%9F%E9%A2%98/" title="Java期末真题"><img src= "/img/loading.png" data-lazy-src="/img/8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java期末真题"/></a><div class="content"><a class="title" href="/2025/12/10/%E6%9C%9F%E6%9C%AB%E7%9C%9F%E9%A2%98/" title="Java期末真题">Java期末真题</a><time datetime="2025-12-10T06:03:00.000Z" title="发表于 2025-12-10 14:03:00">2025-12-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
