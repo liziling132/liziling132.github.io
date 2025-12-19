@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Ling的个人博客 | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="恭喜你选择 RuoYi (若依) 框架作为切入点！它是目前国内 Java 生态中非常经典、流行且易于上手的后台管理框架。 这里默认你学习的是最主流的 前后端分离版本 (RuoYi-Vue)。如果你的环境（JDK, Maven, MySQL, Redis, Node.js）基本齐备，按以下步骤操作，通常 15-20分钟 就能跑通。  第一阶段：环境准备 (必做)在开始之前，请确保你的电脑上已经安装并">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ling的个人博客">
+<meta property="og:url" content="http://example.com/2025/12/19/ruoyi/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="恭喜你选择 RuoYi (若依) 框架作为切入点！它是目前国内 Java 生态中非常经典、流行且易于上手的后台管理框架。 这里默认你学习的是最主流的 前后端分离版本 (RuoYi-Vue)。如果你的环境（JDK, Maven, MySQL, Redis, Node.js）基本齐备，按以下步骤操作，通常 15-20分钟 就能跑通。  第一阶段：环境准备 (必做)在开始之前，请确保你的电脑上已经安装并">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg">
+<meta property="article:published_time" content="2025-12-19T08:21:47.076Z">
+<meta property="article:modified_time" content="2025-12-19T08:22:21.249Z">
+<meta property="article:author" content="Ling">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "",
+  "url": "http://example.com/2025/12/19/ruoyi/",
+  "image": "http://example.com/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg",
+  "datePublished": "2025-12-19T08:21:47.076Z",
+  "dateModified": "2025-12-19T08:22:21.249Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "http://example.com/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/2.png"><link rel="canonical" href="http://example.com/2025/12/19/ruoyi/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Ling的个人博客',
+  isHighlightShrink: true,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/5.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/img/loading.png" data-lazy-src="/img/2.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Ling的个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">无标题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-12-19T08:21:47.076Z" title="发表于 2025-12-19 16:21:47">2025-12-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-12-19T08:22:21.249Z" title="更新于 2025-12-19 16:22:21">2025-12-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>恭喜你选择 <strong>RuoYi (若依)</strong> 框架作为切入点！它是目前国内 Java 生态中非常经典、流行且易于上手的后台管理框架。</p>
+<p>这里默认你学习的是最主流的 <strong>前后端分离版本 (RuoYi-Vue)</strong>。如果你的环境（JDK, Maven, MySQL, Redis, Node.js）基本齐备，按以下步骤操作，通常 <strong>15-20分钟</strong> 就能跑通。</p>
+<hr>
+<h3 id="第一阶段：环境准备-必做"><a href="#第一阶段：环境准备-必做" class="headerlink" title="第一阶段：环境准备 (必做)"></a>第一阶段：环境准备 (必做)</h3><p>在开始之前，请确保你的电脑上已经安装并运行了以下软件。如果缺少任何一个，项目都跑不起来。</p>
+<ol>
+<li><strong>JDK:</strong> 1.8 (推荐) 或 11&#x2F;17 (取决于你下载的版本，默认 1.8 最稳)。</li>
+<li><strong>MySQL:</strong> 5.7 或 8.0+ (记得你的 root 密码)。</li>
+<li><strong>Redis:</strong> <strong>必须安装并启动</strong> (若依用它存 Token 和缓存，没它后端会报错)。</li>
+<li><strong>Maven:</strong> 配置好阿里云镜像，否则下载依赖会很慢。</li>
+<li><strong>Node.js:</strong> 前端运行环境 (建议 v14 或 v16，版本过高有时会有依赖兼容问题，但也通常可行)。</li>
+</ol>
+<hr>
+<h3 id="第二阶段：获取代码与数据库"><a href="#第二阶段：获取代码与数据库" class="headerlink" title="第二阶段：获取代码与数据库"></a>第二阶段：获取代码与数据库</h3><h4 id="1-下载代码"><a href="#1-下载代码" class="headerlink" title="1. 下载代码"></a>1. 下载代码</h4><p>去 Gitee (码云) 下载速度最快。</p>
+<ul>
+<li>地址：<code>https://gitee.com/y_project/RuoYi-Vue</code></li>
+<li>你可以 <code>git clone</code> 或者直接下载 ZIP 包并解压。</li>
+</ul>
+<h4 id="2-初始化数据库-关键"><a href="#2-初始化数据库-关键" class="headerlink" title="2. 初始化数据库 (关键)"></a>2. 初始化数据库 (关键)</h4><ol>
+<li>打开你的数据库管理工具 (Navicat &#x2F; DBeaver)。</li>
+<li>新建一个数据库，名字建议叫 <code>ry-vue</code> (字符集选 <code>utf8mb4</code>)。</li>
+<li>在解压后的项目文件夹中找到 <code>sql</code> 目录，依次运行下面两个文件：</li>
+</ol>
+<ul>
+<li><code>ry_20xx_xx_xx.sql</code> (主结构数据)</li>
+<li><code>quartz.sql</code> (定时任务表)</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong> 一定要确保所有表都成功创建。</p>
+</blockquote>
+<hr>
+<h3 id="第三阶段：后端启动-Backend"><a href="#第三阶段：后端启动-Backend" class="headerlink" title="第三阶段：后端启动 (Backend)"></a>第三阶段：后端启动 (Backend)</h3><ol>
+<li><strong>导入项目：</strong> 打开 IntelliJ IDEA -&gt; Open -&gt; 选择解压后的文件夹 (根目录)。</li>
+<li><strong>等待依赖下载：</strong> 这是一个 Maven 多模块项目，右下角通常会提示 “Load Maven Project”，点击让它自动下载 Jar 包。</li>
+<li><strong>修改配置 (连接数据库)：</strong></li>
+</ol>
+<ul>
+<li>找到 <code>ruoyi-admin</code> 模块 -&gt; <code>src/main/resources</code> -&gt; <code>application-druid.yml</code>。</li>
+<li><strong>修改 URL：</strong> 确认端口是否是 <code>3306</code>，数据库名是否是你刚才建的 <code>ry-vue</code>。</li>
+<li><strong>修改账号密码：</strong> 把 <code>username</code> 和 <code>password</code> 改成你本地 MySQL 的账号密码。</li>
+</ul>
+<ol start="4">
+<li><strong>检查 Redis 配置：</strong></li>
+</ol>
+<ul>
+<li>打开 <code>application.yml</code>，查看 Redis 配置 (通常默认是 <code>localhost</code> 和 <code>6379</code>，无密码)。如果你本地 Redis 有密码，记得在这里填上。</li>
+</ul>
+<ol start="5">
+<li><strong>启动：</strong></li>
+</ol>
+<ul>
+<li>找到 <code>RuoYiApplication.java</code> (在 <code>ruoyi-admin</code> 模块下)，右键 -&gt; <strong>Run ‘RuoYiApplication’</strong>。</li>
+<li>观察控制台，如果看到 <strong>“若依启动成功”</strong> 的大字图案，说明后端通了！</li>
+</ul>
+<hr>
+<h3 id="第四阶段：前端启动-Frontend"><a href="#第四阶段：前端启动-Frontend" class="headerlink" title="第四阶段：前端启动 (Frontend)"></a>第四阶段：前端启动 (Frontend)</h3><ol>
+<li><strong>进入前端目录：</strong></li>
+</ol>
+<ul>
+<li>打开终端 (CMD 或 IDEA 的 Terminal)。</li>
+<li>进入 <code>ruoyi-ui</code> 目录：<code>cd ruoyi-ui</code>。</li>
+</ul>
+<ol start="2">
+<li><strong>安装依赖：</strong></li>
+</ol>
+<ul>
+<li>执行命令：<code>npm install</code></li>
+<li><em>技巧：如果下载慢或报错，可以使用淘宝镜像：</em> <code>npm install --registry=https://registry.npmmirror.com</code></li>
+</ul>
+<ol start="3">
+<li><strong>启动服务：</strong></li>
+</ol>
+<ul>
+<li>执行命令：<code>npm run dev</code></li>
+</ul>
+<ol start="4">
+<li><strong>成功：</strong></li>
+</ol>
+<ul>
+<li>启动完成后，浏览器通常会自动弹出，或者手动访问 <code>http://localhost:80</code>。</li>
+</ul>
+<hr>
+<h3 id="第五阶段：登录验证"><a href="#第五阶段：登录验证" class="headerlink" title="第五阶段：登录验证"></a>第五阶段：登录验证</h3><p>如果不出意外，你应该能看到一个蓝色的登录界面。</p>
+<ul>
+<li><strong>默认账号：</strong> <code>admin</code></li>
+<li><strong>默认密码：</strong> <code>admin123</code></li>
+<li><strong>验证码：</strong> 如果能看到验证码图片，说明后端 -&gt; Redis -&gt; 前端的链路是通的。如果验证码裂了，通常是 Redis 没开或者后端报错了。</li>
+</ul>
+<hr>
+<h3 id="常见“坑”与排雷指南"><a href="#常见“坑”与排雷指南" class="headerlink" title="常见“坑”与排雷指南"></a>常见“坑”与排雷指南</h3><p>为了让你一次成功，请检查以下高频错误：</p>
+<ul>
+<li><p><strong>Error: Redis连接失败：</strong> 控制台疯狂报错 <code>Connection refused</code>。</p>
+</li>
+<li><p><em>解法：</em> 检查你本地的 Redis 服务有没有开启。Windows 上通常需要手动双击 <code>redis-server.exe</code>。</p>
+</li>
+<li><p><strong>Error: 依赖下载失败 (Maven)：</strong> IDEA 里全是红线。</p>
+</li>
+<li><p><em>解法：</em> 刷新 Maven，或者检查 Maven 的 <code>settings.xml</code> 是否配置了阿里云镜像。</p>
+</li>
+<li><p><strong>Error: 前端 <code>node-sass</code> 报错：</strong> <code>npm install</code> 出现一大堆 Python 相关的错误。</p>
+</li>
+<li><p><em>解法：</em> 通常是 Node 版本太高导致的。若依较新版本已换成 <code>dart-sass</code> 解决了此问题，但如果遇到，尝试降低 Node 版本到 v14，或者删除 <code>node_modules</code> 重新 <code>npm install</code>。</p>
+</li>
+<li><p><strong>Error: 端口占用：</strong></p>
+</li>
+<li><p>后端默认用 <code>8080</code>，前端默认用 <code>80</code>。如果启动报错端口占用，去配置文件里改一下端口号即可。</p>
+</li>
+</ul>
+<hr>
+<h3 id="下一步建议"><a href="#下一步建议" class="headerlink" title="下一步建议"></a>下一步建议</h3><p>既然跑通了，单纯看页面没有意义。建议你下一步做以下尝试来加深理解：</p>
+<p><strong>你想先从哪个方向入手？</strong></p>
+<ol>
+<li><strong>代码生成器 (最核心功能)：</strong> 教你如何在数据库建一张表，然后一键生成所有的增删改查代码。</li>
+<li><strong>权限控制：</strong> 也就是它是怎么控制“谁能看哪个菜单”的 (Spring Security)。</li>
+<li><strong>项目结构分析：</strong> 搞清楚 <code>common</code>, <code>framework</code>, <code>system</code> 这些模块分别是干嘛的。</li>
+</ol>
+<p>告诉我你的选择，我带你继续！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2025/12/19/ruoyi/">http://example.com/2025/12/19/ruoyi/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="http://example.com" target="_blank">Ling的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/12/15/%E7%AE%97%E6%B3%95/" title="算法复习规划"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/8.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">算法复习规划</div></div><div class="info-2"><div class="info-item-1">没问题！这张“回忆版”真题确实含金量极高，直接暴露了老师的**“LeetCode 原题搬运工”**属性。 根据你提供的真题分析，我为你整理了这份带直达链接的必刷题单。既然时间紧（10天），请优先刷标有 ⭐ 的题目，那是核心母题。  🎯 第一部分：分治策略 (Divide &amp; Conquer)去年考点：LC 162 寻找峰值。重点在于二分查找的变体和归并思想。  ⭐ LC 162. 寻找峰值 (去年原题，利用“爬坡”性质二分)https://leetcode.cn/problems/find-peak-element/ ⭐ LC 33. 搜索旋转排序数组 (必考！二分法的最高频考题，比峰值更经典)https://leetcode.cn/problems/search-in-rotated-sorted-array/ LC 34. 在排序数组中查找元素的第一个和最后一个位置 (考察二分的边界处理)https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/ ⭐ LC...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liziling132"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/3.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87-%E5%BF%85%E5%81%9A"><span class="toc-number">1.</span> <span class="toc-text">第一阶段：环境准备 (必做)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E8%8E%B7%E5%8F%96%E4%BB%A3%E7%A0%81%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">2.</span> <span class="toc-text">第二阶段：获取代码与数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BD%E4%BB%A3%E7%A0%81"><span class="toc-number">2.1.</span> <span class="toc-text">1. 下载代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E9%94%AE"><span class="toc-number">2.2.</span> <span class="toc-text">2. 初始化数据库 (关键)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%90%8E%E7%AB%AF%E5%90%AF%E5%8A%A8-Backend"><span class="toc-number">3.</span> <span class="toc-text">第三阶段：后端启动 (Backend)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%89%8D%E7%AB%AF%E5%90%AF%E5%8A%A8-Frontend"><span class="toc-number">4.</span> <span class="toc-text">第四阶段：前端启动 (Frontend)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E9%98%B6%E6%AE%B5%EF%BC%9A%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81"><span class="toc-number">5.</span> <span class="toc-text">第五阶段：登录验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E2%80%9C%E5%9D%91%E2%80%9D%E4%B8%8E%E6%8E%92%E9%9B%B7%E6%8C%87%E5%8D%97"><span class="toc-number">6.</span> <span class="toc-text">常见“坑”与排雷指南</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%E5%BB%BA%E8%AE%AE"><span class="toc-number">7.</span> <span class="toc-text">下一步建议</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/12/19/ruoyi/" title="无标题"><img src= "/img/loading.png" data-lazy-src="/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无标题"/></a><div class="content"><a class="title" href="/2025/12/19/ruoyi/" title="无标题">无标题</a><time datetime="2025-12-19T08:21:47.076Z" title="发表于 2025-12-19 16:21:47">2025-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/15/%E7%AE%97%E6%B3%95/" title="算法复习规划"><img src= "/img/loading.png" data-lazy-src="/img/8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法复习规划"/></a><div class="content"><a class="title" href="/2025/12/15/%E7%AE%97%E6%B3%95/" title="算法复习规划">算法复习规划</a><time datetime="2025-12-15T11:00:00.000Z" title="发表于 2025-12-15 19:00:00">2025-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/15/%E7%BF%BB%E5%A2%99/" title="关于如何科学上网——Clash配置教程"><img src= "/img/loading.png" data-lazy-src="/img/13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关于如何科学上网——Clash配置教程"/></a><div class="content"><a class="title" href="/2025/12/15/%E7%BF%BB%E5%A2%99/" title="关于如何科学上网——Clash配置教程">关于如何科学上网——Clash配置教程</a><time datetime="2025-12-15T02:00:00.000Z" title="发表于 2025-12-15 10:00:00">2025-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习"><img src= "/img/loading.png" data-lazy-src="/img/11.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java期末复习"/></a><div class="content"><a class="title" href="/2025/12/10/Java%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/" title="Java期末复习">Java期末复习</a><time datetime="2025-12-10T07:06:00.000Z" title="发表于 2025-12-10 15:06:00">2025-12-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/10/%E6%9C%9F%E6%9C%AB%E7%9C%9F%E9%A2%98/" title="Java期末真题2022"><img src= "/img/loading.png" data-lazy-src="/img/8.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java期末真题2022"/></a><div class="content"><a class="title" href="/2025/12/10/%E6%9C%9F%E6%9C%AB%E7%9C%9F%E9%A2%98/" title="Java期末真题2022">Java期末真题2022</a><time datetime="2025-12-10T06:03:00.000Z" title="发表于 2025-12-10 14:03:00">2025-12-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/5.jpg%20/img/6.jpg%20/img/8.jpg%20/img/11.png%20/img/13.jpg);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
