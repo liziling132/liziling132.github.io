@@ -159,8 +159,7 @@ subtitle:
   source: false
   # If you close the typewriter effect, the subtitle will only show the first line of sub
   sub: 
-    - 曲折穷途天地窄，重重灾劫生死危
-    - 身如柳絮随风扬，无论云泥意贯一
+    - 人生没有失败，不是学到就是赚到
     
 
 # Article layout on the homepage
@@ -171,7 +170,7 @@ subtitle:
 # 5: Info displayed on the cover
 # 6: Masonry layout - Cover on top, info on the bottom
 # 7: Masonry layout - Info displayed on the cover
-index_layout: 3
+index_layout: 4
 
 # Display the article introduction on homepage
 # 1: description
