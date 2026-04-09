@@ -1,0 +1,431 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>内部类和函数式编程 | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="内部类内部类就是类中再套一个类 eg： 1234class Outer &#123;    class Inner &#123;    &#125;&#125;    作用： 让一个类和另一个类关系更紧密 内部类可以方便访问外部类的成员 有些场景下写起来更方便，比如事件处理、临时小对象 Java 里常见有 4 种：  成员内部类 静态内部类 局部内部类 匿名内部类  成员内部类就是：像成员变量一样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内部类和函数式编程">
+<meta property="og:url" content="https://liziling132.github.io/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="内部类内部类就是类中再套一个类 eg： 1234class Outer &#123;    class Inner &#123;    &#125;&#125;    作用： 让一个类和另一个类关系更紧密 内部类可以方便访问外部类的成员 有些场景下写起来更方便，比如事件处理、临时小对象 Java 里常见有 4 种：  成员内部类 静态内部类 局部内部类 匿名内部类  成员内部类就是：像成员变量一样">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liziling132.github.io/img/11.png">
+<meta property="article:published_time" content="2026-04-09T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-09T12:17:37.275Z">
+<meta property="article:author" content="Ling">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liziling132.github.io/img/11.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "内部类和函数式编程",
+  "url": "https://liziling132.github.io/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/",
+  "image": "https://liziling132.github.io/img/11.png",
+  "datePublished": "2026-04-09T02:00:00.000Z",
+  "dateModified": "2026-04-09T12:17:37.275Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "https://liziling132.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/2.png"><link rel="canonical" href="https://liziling132.github.io/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '内部类和函数式编程',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/5.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/11.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/img/loading.png" data-lazy-src="/img/2.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">内部类和函数式编程</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">内部类和函数式编程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-09T02:00:00.000Z" title="发表于 2026-04-09 10:00:00">2026-04-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-09T12:17:37.275Z" title="更新于 2026-04-09 20:17:37">2026-04-09</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h1><p>内部类就是类中再套一个类</p>
+<p>eg：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line">    class Inner &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>作用：</p>
+<p>让一个类和另一个类关系更紧密</p>
+<p>内部类可以方便访问外部类的成员</p>
+<p>有些场景下写起来更方便，比如事件处理、临时小对象</p>
+<p>Java 里常见有 4 种：</p>
+<ul>
+<li>成员内部类</li>
+<li>静态内部类</li>
+<li>局部内部类</li>
+<li>匿名内部类</li>
+</ul>
+<h3 id="成员内部类"><a href="#成员内部类" class="headerlink" title="成员内部类"></a>成员内部类</h3><p>就是：<strong>像成员变量一样，直接写在类里面</strong>，不加 <code>static</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line">    private String name = &quot;Outer&quot;;</span><br><span class="line"></span><br><span class="line">    class Inner &#123;</span><br><span class="line">        public void show() &#123;</span><br><span class="line">            System.out.println(name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>Inner</code> 可以直接访问 <code>Outer</code> 的私有成员 <code>name</code>。</p>
+<h4 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h4><p>成员内部类对象不能直接 new，一般要先有外部类对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Outer outer = new Outer();</span><br><span class="line">Outer.Inner inner = outer.new Inner();</span><br><span class="line">inner.show();</span><br></pre></td></tr></table></figure>
+
+<h4 id="记忆点"><a href="#记忆点" class="headerlink" title="记忆点"></a>记忆点</h4><p>成员内部类 <strong>依附于外部类对象存在</strong>。</p>
+<h3 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h3><p>就是：<strong>内部类前面加 <code>static</code></strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line">    static String country = &quot;China&quot;;</span><br><span class="line"></span><br><span class="line">    static class Inner &#123;</span><br><span class="line">        public void show() &#123;</span><br><span class="line">            System.out.println(country);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建对象-1"><a href="#创建对象-1" class="headerlink" title="创建对象"></a>创建对象</h4><p>静态内部类不需要依赖外部类对象：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Outer.Inner inner = new Outer.Inner();</span><br><span class="line">inner.show();</span><br></pre></td></tr></table></figure>
+
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p>它只能直接访问外部类的 <strong>静态成员</strong>，不能直接访问非静态成员。</p>
+<p>如果想访问非静态成员，得先创建外部类对象。</p>
+<h2 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h2><p>就是：<strong>定义在方法里面的类</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line">    public void test() &#123;</span><br><span class="line">        class Inner &#123;</span><br><span class="line">            public void show() &#123;</span><br><span class="line">                System.out.println(&quot;局部内部类&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Inner inner = new Inner();</span><br><span class="line">        inner.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>只能在当前方法里使用</li>
+<li>作用域只在这个方法内部</li>
+</ul>
+<h3 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h3><p><strong>没有名字的内部类，通常只用一次。</strong></p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">interface Animal &#123;</span><br><span class="line">    void speak();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Animal a = new Animal() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void speak() &#123;</span><br><span class="line">                System.out.println(&quot;汪汪&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        a.speak();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new Animal() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void speak() &#123;</span><br><span class="line">        System.out.println(&quot;汪汪&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就是匿名内部类。</p>
+<h4 id="它本质上做了什么"><a href="#它本质上做了什么" class="headerlink" title="它本质上做了什么"></a>它本质上做了什么</h4><p>相当于：</p>
+<ul>
+<li>创建了一个实现 <code>Animal</code> 接口的类</li>
+<li>这个类没有名字</li>
+<li>顺手直接创建了这个类的对象</li>
+</ul>
+<h3 id="四种内部类快速对比"><a href="#四种内部类快速对比" class="headerlink" title="四种内部类快速对比"></a>四种内部类快速对比</h3><h4 id="成员内部类-1"><a href="#成员内部类-1" class="headerlink" title="成员内部类"></a>成员内部类</h4><p>定义在类里，不加 <code>static</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line">    class Inner &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>特点：依赖外部类对象</p>
+<hr>
+<h4 id="静态内部类-1"><a href="#静态内部类-1" class="headerlink" title="静态内部类"></a>静态内部类</h4><p>定义在类里，加 <code>static</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Outer &#123;</span><br><span class="line">    static class Inner &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>特点：不依赖外部类对象</p>
+<hr>
+<h4 id="局部内部类-1"><a href="#局部内部类-1" class="headerlink" title="局部内部类"></a>局部内部类</h4><p>定义在方法里</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void test() &#123;</span><br><span class="line">    class Inner &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>特点：只能在方法里用</p>
+<hr>
+<h4 id="匿名内部类-1"><a href="#匿名内部类-1" class="headerlink" title="匿名内部类"></a>匿名内部类</h4><p>没有类名，通常只用一次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>特点：简洁，常用于临时实现接口或继承类</p>
+<h1 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h1><h3 id="为什么会出现-Lambda"><a href="#为什么会出现-Lambda" class="headerlink" title="为什么会出现 Lambda"></a>为什么会出现 Lambda</h3><p>在 Java 8 以前，很多场景都要写匿名内部类，特别啰嗦。</p>
+<p>比如线程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Runnable r = new Runnable() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        System.out.println(&quot;hello&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码真正重要的逻辑其实只有一句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;hello&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>但为了让 Java 知道“你是在实现 <code>Runnable</code> 接口的 <code>run()</code> 方法”，你得写很多模板代码。</p>
+<p>所以 Java 8 引入 Lambda，把它简化成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Runnable r = () -&gt; System.out.println(&quot;hello&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>一下子就清爽很多。</p>
+<h3 id="Lambda-只能用于什么地方"><a href="#Lambda-只能用于什么地方" class="headerlink" title="Lambda 只能用于什么地方"></a>Lambda 只能用于什么地方</h3><h4 id=""><a href="#" class="headerlink" title=""></a></h4><p>Lambda <strong>只能用于函数式接口</strong>。</p>
+<p>函数式接口就是：</p>
+<p><strong>有且只有一个抽象方法的接口。</strong></p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">interface MyRunnable &#123;</span><br><span class="line">    void run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这就是函数式接口。</p>
+<p>可以有别的方法，但只能有 <strong>一个抽象方法</strong>。</p>
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@FunctionalInterface</span><br><span class="line">interface Test &#123;</span><br><span class="line">    void run();   // 唯一抽象方法</span><br><span class="line"></span><br><span class="line">    default void hello() &#123;</span><br><span class="line">        System.out.println(&quot;hello&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static void hi() &#123;</span><br><span class="line">        System.out.println(&quot;hi&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里仍然是函数式接口，因为：</p>
+<ul>
+<li><code>run()</code> 是抽象方法</li>
+<li><code>default</code> 方法不是抽象方法</li>
+<li><code>static</code> 方法也不是抽象方法</li>
+</ul>
+<h3 id="FunctionalInterface"><a href="#FunctionalInterface" class="headerlink" title="@FunctionalInterface"></a>@FunctionalInterface</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@FunctionalInterface</span><br><span class="line">interface Calculator &#123;</span><br><span class="line">    int add(int a, int b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它的作用是：</p>
+<ul>
+<li>告诉别人：这是个函数式接口</li>
+<li>编译器会帮你检查：如果你不小心写了两个抽象方法，会直接报错</li>
+</ul>
+<h3 id="Lambda-的基本语法"><a href="#Lambda-的基本语法" class="headerlink" title="Lambda 的基本语法"></a>Lambda 的基本语法</h3><p>Lambda 的核心语法是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(参数列表) -&gt; &#123; 方法体 &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(a, b) -&gt; a + b</span><br></pre></td></tr></table></figure>
+
+<p>意思就是：</p>
+<ul>
+<li>接收两个参数 <code>a</code>、<code>b</code></li>
+<li>返回 <code>a + b</code></li>
+</ul>
+<p>eg：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">interface Calculator &#123;</span><br><span class="line">    int add(int a, int b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Lambda 写法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Calculator c = (a, b) -&gt; &#123;</span><br><span class="line">    return a + b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>如果方法体只有一句 <code>return</code>，可以继续简化成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Calculator c = (a, b) -&gt; a + b;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="Lambda-可以访问外部变量吗"><a href="#Lambda-可以访问外部变量吗" class="headerlink" title="Lambda 可以访问外部变量吗"></a>Lambda 可以访问外部变量吗</h3><p>它可以访问：</p>
+<ul>
+<li>外部类成员变量</li>
+<li>静态变量</li>
+<li>局部变量，但局部变量必须是 <code>final</code> 或 effectively final（你虽然没写 <code>final</code>，但它的值没有再改过）</li>
+</ul>
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>普通 Lambda：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(s -&gt; System.out.println(s));</span><br></pre></td></tr></table></figure>
+
+<p>方法引用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>不是所有 Lambda 都能改成方法引用。</strong></p>
+<p>只有当 Lambda 逻辑本质上是：</p>
+<ul>
+<li>拿到参数</li>
+<li>直接调用一个已有方法</li>
+<li>没有额外加工</li>
+</ul>
+<p>才可以改。</p>
+<p>比如这个可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s -&gt; Integer.parseInt(s)</span><br></pre></td></tr></table></figure>
+
+<p>可以写成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer::parseInt</span><br></pre></td></tr></table></figure>
+
+<p>但这个一般就不能直接改：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s -&gt; s.trim().toUpperCase()</span><br></pre></td></tr></table></figure>
+
+<p>因为里面做了两步，不是单纯调用一个方法。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out::println</span><br><span class="line">Integer::parseInt</span><br><span class="line">String::length</span><br><span class="line">ArrayList::new</span><br></pre></td></tr></table></figure>
+
+<p>分别对应：</p>
+<ul>
+<li>对象实例方法</li>
+<li>静态方法</li>
+<li>类名引用实例方法</li>
+<li>构造器引用</li>
+</ul>
+<h1 id="Stream-API"><a href="#Stream-API" class="headerlink" title="Stream API"></a>Stream API</h1><p>Java 8引入了Stream API，它提供了一种高效且易于使用的数据处理方式，特别适合集合对象的操作，如过滤、映射、排序等。</p>
+<p>它不存数据，只负责“加工数据”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Arrays.asList(&quot;Java&quot;, &quot;Go&quot;, &quot;Python&quot;);</span><br><span class="line"></span><br><span class="line">list.stream()</span><br><span class="line">    .filter(s -&gt; s.length() &gt; 2)</span><br><span class="line">    .map(String::toUpperCase)</span><br><span class="line">    .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码的意思是：</p>
+<ol>
+<li>把 <code>list</code> 变成流</li>
+<li>过滤长度大于 2 的字符串</li>
+<li>转成大写</li>
+<li>输出</li>
+</ol>
+<h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>写法更简洁</li>
+<li>适合链式操作</li>
+<li>常和 Lambda 一起用</li>
+</ul>
+<h3 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">数据源.stream()</span><br><span class="line">    .中间操作()</span><br><span class="line">    .终止操作();</span><br></pre></td></tr></table></figure>
+
+<h3 id="常见中间操作"><a href="#常见中间操作" class="headerlink" title="常见中间操作"></a>常见中间操作</h3><ul>
+<li><code>filter(按条件筛选元素)</code></li>
+<li><code>map(把一个元素转成另一个元素)</code></li>
+<li><code>sorted(排序)</code></li>
+<li><code>distinct(去重)</code></li>
+</ul>
+<h3 id="常见终止操作"><a href="#常见终止操作" class="headerlink" title="常见终止操作"></a>常见终止操作</h3><ul>
+<li><code>forEach(遍历输出)</code></li>
+<li><code>collect(收集结果)</code></li>
+<li><code>count(统计项目)</code></li>
+<li><code>findFirst(找第一个)</code></li>
+</ul>
+<h3 id="并行流"><a href="#并行流" class="headerlink" title="并行流"></a>并行流</h3><p>普通流：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br></pre></td></tr></table></figure>
+
+<p>并行流：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.parallelStream()</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.stream().parallel()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>普通 <code>stream()</code> 是<strong>单线程</strong>顺序处理。<br> 并行 <code>parallelStream()</code> 是<strong>多线程</strong>处理</p>
+<p><img src= "/img/loading.png" data-lazy-src="image-20260409201255728.png" alt="image-20260409201255728"></p>
+<p>对CPU密集型的任务来说，并行流使用ForkJoinPool线程池，为每个CPU分配一个任务，这是非常有效率的，但是如果任务不是CPU密集的，而是I&#x2F;O密集的，并且任务数相对线程数比较大，那么直接用ParallelStream并不是很好的选择。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://liziling132.github.io">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://liziling132.github.io/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">https://liziling132.github.io/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://liziling132.github.io" target="_blank">Ling的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%AB%E8%82%A1/">八股</a></div><div class="post-share"><div class="social-share" data-image="/img/11.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/01/%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E5%92%8C/" title="最大子数组和"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/14.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">最大子数组和</div></div><div class="info-2"><div class="info-item-1">https://leetcode.cn/problems/maximum-subarray/?envType=study-plan-v2&amp;envId=top-100-liked  核心逻辑： Kadane 算法（动态规划） 1234567891011class Solution &#123;    public int maxSubArray(int[] nums) &#123;        int maxsum=nums[0];        int maxcurrent=nums[0];        for(int i=1;i&lt;nums.length;i++)&#123;            maxcurrent=Math.max(nums[i],maxcurrent+nums[i]);            maxsum=Math.max(maxcurrent,maxsum);        &#125;        return maxsum;    &#125;&#125;        1. 核心决策：你要不要“另起炉灶”？在遍历数组的每一个数字...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liziling132"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/3.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">李子凌的个人博客，平时会记录一些自己的学习过程和生活经历，不定期更新，欢迎来找我玩。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">成员内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.1.</span> <span class="toc-text">创建对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%BF%86%E7%82%B9"><span class="toc-number">1.1.2.</span> <span class="toc-text">记忆点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">静态内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1-1"><span class="toc-number">1.2.1.</span> <span class="toc-text">创建对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-number">1.2.2.</span> <span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">局部内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB"><span class="toc-number">1.3.2.</span> <span class="toc-text">匿名内部类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%83%E6%9C%AC%E8%B4%A8%E4%B8%8A%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">它本质上做了什么</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E5%86%85%E9%83%A8%E7%B1%BB%E5%BF%AB%E9%80%9F%E5%AF%B9%E6%AF%94"><span class="toc-number">1.3.3.</span> <span class="toc-text">四种内部类快速对比</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB-1"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">成员内部类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB-1"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">静态内部类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%86%85%E9%83%A8%E7%B1%BB-1"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">局部内部类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB-1"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">匿名内部类</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lambda"><span class="toc-number">2.</span> <span class="toc-text">Lambda</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0-Lambda"><span class="toc-number">2.1.</span> <span class="toc-text">为什么会出现 Lambda</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda-%E5%8F%AA%E8%83%BD%E7%94%A8%E4%BA%8E%E4%BB%80%E4%B9%88%E5%9C%B0%E6%96%B9"><span class="toc-number">2.2.</span> <span class="toc-text">Lambda 只能用于什么地方</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">2.2.1.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FunctionalInterface"><span class="toc-number">2.3.</span> <span class="toc-text">@FunctionalInterface</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda-%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">2.4.</span> <span class="toc-text">Lambda 的基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambda-%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE%E5%A4%96%E9%83%A8%E5%8F%98%E9%87%8F%E5%90%97"><span class="toc-number">2.5.</span> <span class="toc-text">Lambda 可以访问外部变量吗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%BC%95%E7%94%A8"><span class="toc-number">2.6.</span> <span class="toc-text">方法引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">2.7.</span> <span class="toc-text">语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Stream-API"><span class="toc-number">3.</span> <span class="toc-text">Stream API</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-2"><span class="toc-number">3.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="toc-number">3.2.</span> <span class="toc-text">基本流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E4%B8%AD%E9%97%B4%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.</span> <span class="toc-text">常见中间操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%BB%88%E6%AD%A2%E6%93%8D%E4%BD%9C"><span class="toc-number">3.4.</span> <span class="toc-text">常见终止操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E6%B5%81"><span class="toc-number">3.5.</span> <span class="toc-text">并行流</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="内部类和函数式编程"><img src= "/img/loading.png" data-lazy-src="/img/11.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="内部类和函数式编程"/></a><div class="content"><a class="title" href="/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="内部类和函数式编程">内部类和函数式编程</a><time datetime="2026-04-09T02:00:00.000Z" title="发表于 2026-04-09 10:00:00">2026-04-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/01/%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E5%92%8C/" title="最大子数组和"><img src= "/img/loading.png" data-lazy-src="/img/14.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="最大子数组和"/></a><div class="content"><a class="title" href="/2026/04/01/%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84%E5%92%8C/" title="最大子数组和">最大子数组和</a><time datetime="2026-04-01T09:31:21.000Z" title="发表于 2026-04-01 17:31:21">2026-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/01/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" title="JVM到JUC过度：JMM"><img src= "/img/loading.png" data-lazy-src="/img/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM到JUC过度：JMM"/></a><div class="content"><a class="title" href="/2026/04/01/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" title="JVM到JUC过度：JMM">JVM到JUC过度：JMM</a><time datetime="2026-04-01T08:31:21.000Z" title="发表于 2026-04-01 16:31:21">2026-04-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/11/JVM%E5%AD%97%E8%8A%82%E7%A0%81%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="JVM字节码和类加载"><img src= "/img/loading.png" data-lazy-src="/img/11.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JVM字节码和类加载"/></a><div class="content"><a class="title" href="/2026/03/11/JVM%E5%AD%97%E8%8A%82%E7%A0%81%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="JVM字节码和类加载">JVM字节码和类加载</a><time datetime="2026-03-11T08:31:21.000Z" title="发表于 2026-03-11 16:31:21">2026-03-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/03/05/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E6%95%B0%E7%BB%84/" title="代码随想录数组"><img src= "/img/loading.png" data-lazy-src="/img/13.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="代码随想录数组"/></a><div class="content"><a class="title" href="/2026/03/05/%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E6%95%B0%E7%BB%84/" title="代码随想录数组">代码随想录数组</a><time datetime="2026-03-05T13:15:37.000Z" title="发表于 2026-03-05 21:15:37">2026-03-05</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/11.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
