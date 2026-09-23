@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>黑马点评02 | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="黑马点评02：商户查询缓存商户查询缓存流程 缓存更新策略先更新数据库，再删除缓存1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556@Servicepublic class ShopServiceImpl extends ServiceImpl&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑马点评02">
+<meta property="og:url" content="https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="黑马点评02：商户查询缓存商户查询缓存流程 缓存更新策略先更新数据库，再删除缓存1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556@Servicepublic class ShopServiceImpl extends ServiceImpl&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liziling132.github.io/img/16.png">
+<meta property="article:published_time" content="2026-04-20T04:00:01.000Z">
+<meta property="article:modified_time" content="2026-09-23T13:56:39.642Z">
+<meta property="article:author" content="Ling">
+<meta property="article:tag" content="黑马点评">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liziling132.github.io/img/16.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "黑马点评02",
+  "url": "https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402/",
+  "image": "https://liziling132.github.io/img/16.png",
+  "datePublished": "2026-04-20T04:00:01.000Z",
+  "dateModified": "2026-09-23T13:56:39.642Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "https://liziling132.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/2.png"><link rel="canonical" href="https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '黑马点评02',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/5.jpg);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/16.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/img/loading.png" data-lazy-src="/img/2.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">黑马点评02</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">黑马点评02</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-20T04:00:01.000Z" title="发表于 2026-04-20 12:00:01">2026-04-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-23T13:56:39.642Z" title="更新于 2026-09-23 21:56:39">2026-09-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="黑马点评02：商户查询缓存"><a href="#黑马点评02：商户查询缓存" class="headerlink" title="黑马点评02：商户查询缓存"></a>黑马点评02：商户查询缓存</h1><h3 id="商户查询缓存流程"><a href="#商户查询缓存流程" class="headerlink" title="商户查询缓存流程"></a>商户查询缓存流程</h3><p><img src= "/img/loading.png" data-lazy-src="a2633dd494524f41ae949e211684e516.png" alt="img"></p>
+<h3 id="缓存更新策略"><a href="#缓存更新策略" class="headerlink" title="缓存更新策略"></a>缓存更新策略</h3><h4 id="先更新数据库，再删除缓存"><a href="#先更新数据库，再删除缓存" class="headerlink" title="先更新数据库，再删除缓存"></a>先更新数据库，再删除缓存</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class ShopServiceImpl extends ServiceImpl&lt;ShopMapper, Shop&gt; implements IShopService &#123;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private StringRedisTemplate redisTemplate;</span><br><span class="line">    </span><br><span class="line">    // 查询单个店铺（带缓存）</span><br><span class="line">    @Override</span><br><span class="line">    public Result queryById(Long id) &#123;</span><br><span class="line">        String key = CACHE_SHOP_KEY + id;</span><br><span class="line">        </span><br><span class="line">        // 1. 从缓存查询</span><br><span class="line">        String shopJson = redisTemplate.opsForValue().get(key);</span><br><span class="line">        </span><br><span class="line">        // 2. 缓存命中</span><br><span class="line">        if (StrUtil.isNotBlank(shopJson)) &#123;</span><br><span class="line">            Shop shop = JSONUtil.toBean(shopJson, Shop.class);</span><br><span class="line">            return Result.ok(shop);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 3. 缓存未命中，查数据库</span><br><span class="line">        Shop shop = getById(id);</span><br><span class="line">        if (shop == null) &#123;</span><br><span class="line">            return Result.fail(&quot;店铺不存在&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 4. 写入缓存（设置过期时间）</span><br><span class="line">        redisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(shop), </span><br><span class="line">                                        CACHE_SHOP_TTL, TimeUnit.MINUTES);</span><br><span class="line">        </span><br><span class="line">        return Result.ok(shop);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 更新店铺（先更新数据库，再删除缓存）</span><br><span class="line">    @Override</span><br><span class="line">    @Transactional</span><br><span class="line">    public Result update(Shop shop) &#123;</span><br><span class="line">        Long id = shop.getId();</span><br><span class="line">        if (id == null) &#123;</span><br><span class="line">            return Result.fail(&quot;店铺ID不能为空&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 1. 更新数据库</span><br><span class="line">        updateById(shop);</span><br><span class="line">        </span><br><span class="line">        // 2. 删除缓存</span><br><span class="line">        String key = CACHE_SHOP_KEY + id;</span><br><span class="line">        redisTemplate.delete(key);</span><br><span class="line">        </span><br><span class="line">        return Result.ok();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>先更新数据库再删除缓存，即使有短暂不一致，也不会产生脏数据；而先删缓存再更新数据库，在并发下会产生难以消除的脏数据。</strong></p>
+<h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p><strong>核心思路</strong>：查询不到数据时，缓存一个 <code>null</code> 或特殊标记，设置较短的过期时间。</p>
+<p><img src= "/img/loading.png" data-lazy-src="f249796e93ba4938b956a34ae1c498c8.png" alt="img"></p>
+<p>redis：<code>&quot;&quot;</code> (空字符串)，则结束；<code>null</code> (不存在)，则查数据库</p>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p><strong>设置随机过期时间</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">@Sevice</span><br><span class="line">public class ShopService &#123;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    private static final long BASE_TTL = 3600;  // 基础1小时</span><br><span class="line">    private static final Random RANDOM = new Random();</span><br><span class="line">    </span><br><span class="line">    public void saveShopToCache(Shop shop) &#123;</span><br><span class="line">        String key = &quot;shop:&quot; + shop.getId();</span><br><span class="line">        </span><br><span class="line">        // 1小时 + 随机0~300秒，避免同时过期</span><br><span class="line">        long randomOffset = RANDOM.nextInt(300);  // 0-300秒</span><br><span class="line">        long ttl = BASE_TTL + randomOffset;</span><br><span class="line">        </span><br><span class="line">        stringRedisTemplate.opsForValue().set(</span><br><span class="line">            key, </span><br><span class="line">            JSONUtil.toJsonStr(shop), </span><br><span class="line">            ttl, </span><br><span class="line">            TimeUnit.SECONDS</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿"></a>缓存击穿</h3><p>逻辑过期（永不过期 + 异步更新）</p>
+<p><img src= "/img/loading.png" data-lazy-src="image-20260923214417921.png" alt="image-20260923214417921"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">@Data</span><br><span class="line">public class RedisData&lt;T&gt; &#123;</span><br><span class="line">    private T data;</span><br><span class="line">    private LocalDateTime expireTime;  // 逻辑过期时间</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">@Slf4j</span><br><span class="line">public class ShopService &#123;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private StringRedisTemplate redisTemplate;</span><br><span class="line">    </span><br><span class="line">    @Autowired</span><br><span class="line">    private ExecutorService executorService;  // 线程池</span><br><span class="line">    </span><br><span class="line">    public Shop getShopById(Long id) &#123;</span><br><span class="line">        String key = &quot;shop:&quot; + id;</span><br><span class="line">        </span><br><span class="line">        // 1. 查缓存</span><br><span class="line">        String json = redisTemplate.opsForValue().get(key);</span><br><span class="line">        if (StrUtil.isBlank(json)) &#123;</span><br><span class="line">            // 缓存不存在（首次加载），查数据库</span><br><span class="line">            return loadShopFromDB(id);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 2. 反序列化</span><br><span class="line">        RedisData&lt;Shop&gt; redisData = JSONUtil.toBean(json, RedisData.class);</span><br><span class="line">        Shop shop = redisData.getData();</span><br><span class="line">        LocalDateTime expireTime = redisData.getExpireTime();</span><br><span class="line">        </span><br><span class="line">        // 3. 判断是否逻辑过期</span><br><span class="line">        if (expireTime.isAfter(LocalDateTime.now())) &#123;</span><br><span class="line">            // 未过期，直接返回</span><br><span class="line">            return shop;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 4. 已过期，尝试获取锁去异步更新</span><br><span class="line">        String lockKey = &quot;lock:shop:&quot; + id;</span><br><span class="line">        RLock lock = redissonClient.getLock(lockKey);</span><br><span class="line">        </span><br><span class="line">        // 尝试获取锁（非阻塞）</span><br><span class="line">        boolean isLock = lock.tryLock();</span><br><span class="line">        if (isLock) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                // 异步更新缓存（不阻塞当前请求）</span><br><span class="line">                executorService.submit(() -&gt; &#123;</span><br><span class="line">                    try &#123;</span><br><span class="line">                        Shop newShop = shopMapper.selectById(id);</span><br><span class="line">                        RedisData&lt;Shop&gt; newRedisData = new RedisData&lt;&gt;();</span><br><span class="line">                        newRedisData.setData(newShop);</span><br><span class="line">                        newRedisData.setExpireTime(LocalDateTime.now().plusMinutes(30));</span><br><span class="line">                        redisTemplate.opsForValue().set(key, JSONUtil.toJsonStr(newRedisData));</span><br><span class="line">                    &#125; finally &#123;</span><br><span class="line">                        lock.unlock();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                log.error(&quot;异步更新失败&quot;, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 5. 返回旧数据（即使过期了）</span><br><span class="line">        return shop;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private Shop loadShopFromDB(Long id) &#123;</span><br><span class="line">        Shop shop = shopMapper.selectById(id);</span><br><span class="line">        if (shop != null) &#123;</span><br><span class="line">            // 写入缓存，逻辑过期时间 30 分钟</span><br><span class="line">            RedisData&lt;Shop&gt; redisData = new RedisData&lt;&gt;();</span><br><span class="line">            redisData.setData(shop);</span><br><span class="line">            redisData.setExpireTime(LocalDateTime.now().plusMinutes(30));</span><br><span class="line">            redisTemplate.opsForValue().set(&quot;shop:&quot; + id, JSONUtil.toJsonStr(redisData));</span><br><span class="line">        &#125;</span><br><span class="line">        return shop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://liziling132.github.io">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402/">https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://liziling132.github.io" target="_blank">Ling的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84/">黑马点评</a></div><div class="post-share"><div class="social-share" data-image="/img/16.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/05/11/%E6%B1%87%E7%BC%96/" title="汇编期末复习"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/14.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">汇编期末复习</div></div><div class="info-2"><div class="info-item-1">第一章机器语言与汇编语言的基础冯·诺依曼体系：该体系的核心思想是将程序当作数据存储起来，然后由计算机自动运行。 机器语言：它是机器指令的集合，而机器指令本质上就是一台机器可以正确执行的二进制码或电平脉冲命令。 汇编语言的产生：因为机器指令难以记忆，所以产生了汇编语言。汇编指令是机器指令的助记符，书写格式更接近人类语言，便于阅读和记忆。程序员编写的汇编指令需要通过“编译器”转换成机器码才能被计算机执行。 汇编语言的组成：它的核心是决定了语言特性的汇编指令，此外还包含由编译器执行的伪指令，以及供编译器识别的其他符号。 指令、数据与存储器（内存）指令与数据的统一性：指令和数据仅仅是应用上的概念区分。在内存或磁盘中，它们没有任何物理区别，全都是二进制信息。 存储器的重要性：CPU要工作，就必须从存储器（内存）中获取指令和数据。磁盘中的程序或数据如果不读入内存，CPU是无法直接使用的。 存储单元与容量：存储器被划分为若干个从0开始顺序编号的存储单元。一个存储单元可以存储8个bit（即8位二进制数，记作1B）。微机中常用的容量计量单位换算为：1KB&#x3D;1024B，1MB&#x3D;1...</div></div></div></a><a class="pagination-related" href="/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8401/" title="黑马点评"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/16.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">黑马点评</div></div><div class="info-2"><div class="info-item-1">黑马点评01：短信登陆第一版用Session实现发送验证码流程 接收手机号，进行基本校验（非空、格式）。 调用短信服务商API发送验证码 关键步骤：将验证码存入 HttpSession。 Key：一个固定字符串或与手机号关联的Key，例如 “code” 或 “login：code：”+phone。 Value：验证码本身。 登录注册流程 校验登陆状态 为了保护需要登录才能访问的接口，项目通过 Spring MVC 的拦截器（Interceptor）来实现状态校验和信息共享：  拦截请求： 拦截器会拦截客户端的请求，并尝试从 HttpSession 中获取 &quot;user&quot; 属性。 状态判断： 如果没有获取到用户信息，说明未登录，直接拦截请求并返回 401 状态码。 如果获取到了用户信息，说明已登录。   保存至 ThreadLocal： 拦截器将获取到的 UserDTO 保存到 ThreadLocal（项目中封装为 UserHolder 工具类）中。这一步非常关键，它实现了线程隔离，使得在后续的 Controller、Service 层中，可以随时随地通过 Use...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8401/" title="黑马点评"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/16.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-20</div><div class="info-item-2">黑马点评</div></div><div class="info-2"><div class="info-item-1">黑马点评01：短信登陆第一版用Session实现发送验证码流程 接收手机号，进行基本校验（非空、格式）。 调用短信服务商API发送验证码 关键步骤：将验证码存入 HttpSession。 Key：一个固定字符串或与手机号关联的Key，例如 “code” 或 “login：code：”+phone。 Value：验证码本身。 登录注册流程 校验登陆状态 为了保护需要登录才能访问的接口，项目通过 Spring MVC 的拦截器（Interceptor）来实现状态校验和信息共享：  拦截请求： 拦截器会拦截客户端的请求，并尝试从 HttpSession 中获取 &quot;user&quot; 属性。 状态判断： 如果没有获取到用户信息，说明未登录，直接拦截请求并返回 401 状态码。 如果获取到了用户信息，说明已登录。   保存至 ThreadLocal： 拦截器将获取到的 UserDTO 保存到 ThreadLocal（项目中封装为 UserHolder 工具类）中。这一步非常关键，它实现了线程隔离，使得在后续的 Controller、Service 层中，可以随时随地通过 Use...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/img/loading.png" data-lazy-src="/img/2.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liziling132"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/3.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">李子凌的个人博客，平时会记录一些自己的学习过程和生活经历，不定期更新，欢迎来找我玩。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402%EF%BC%9A%E5%95%86%E6%88%B7%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">黑马点评02：商户查询缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%86%E6%88%B7%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">商户查询缓存流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-number">1.2.</span> <span class="toc-text">缓存更新策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%86%8D%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98"><span class="toc-number">1.2.1.</span> <span class="toc-text">先更新数据库，再删除缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-number">1.3.</span> <span class="toc-text">缓存穿透</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-number">1.4.</span> <span class="toc-text">缓存雪崩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-number">1.5.</span> <span class="toc-text">缓存击穿</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/08/23/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口"><img src= "/img/loading.png" data-lazy-src="/img/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="滑动窗口"/></a><div class="content"><a class="title" href="/2026/08/23/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口">滑动窗口</a><time datetime="2026-08-23T04:00:00.000Z" title="发表于 2026-08-23 12:00:00">2026-08-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" title="计算机组成原理"><img src= "/img/loading.png" data-lazy-src="/img/15.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机组成原理"/></a><div class="content"><a class="title" href="/2026/06/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" title="计算机组成原理">计算机组成原理</a><time datetime="2026-06-22T02:00:00.000Z" title="发表于 2026-06-22 10:00:00">2026-06-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/10/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程期末复习"><img src= "/img/loading.png" data-lazy-src="/img/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软件工程期末复习"/></a><div class="content"><a class="title" href="/2026/06/10/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程期末复习">软件工程期末复习</a><time datetime="2026-06-10T07:00:00.000Z" title="发表于 2026-06-10 15:00:00">2026-06-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/25/Redis/" title="Redis数据库"><img src= "/img/loading.png" data-lazy-src="/img/7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis数据库"/></a><div class="content"><a class="title" href="/2026/05/25/Redis/" title="Redis数据库">Redis数据库</a><time datetime="2026-05-25T07:00:00.000Z" title="发表于 2026-05-25 15:00:00">2026-05-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/19/Mysql/" title="MySQL数据库"><img src= "/img/loading.png" data-lazy-src="/img/6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL数据库"/></a><div class="content"><a class="title" href="/2026/05/19/Mysql/" title="MySQL数据库">MySQL数据库</a><time datetime="2026-05-19T07:00:00.000Z" title="发表于 2026-05-19 15:00:00">2026-05-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/16.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
