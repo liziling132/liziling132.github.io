@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>黑马点评03 | null</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="黑马点评03：优惠劵秒杀全局唯一ID秒杀业务中，数据库自增 ID 不够用：  *多台服务器同时处理请求 → 每台数据库自增 ID 可能冲突* *数据量极大（千万、亿级）→ 自增 ID 容易暴露业务量* *分库分表后，单表自增 ID 无法保证全局不重复*  基于 Redis 的全局唯一 ID 生成策略：采用 时间戳差值（高位） + 自增序列（低位） 的方式，通过 Redis 的 INCR 命令每天重">
+<meta property="og:type" content="article">
+<meta property="og:title" content="黑马点评03">
+<meta property="og:url" content="https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="黑马点评03：优惠劵秒杀全局唯一ID秒杀业务中，数据库自增 ID 不够用：  *多台服务器同时处理请求 → 每台数据库自增 ID 可能冲突* *数据量极大（千万、亿级）→ 自增 ID 容易暴露业务量* *分库分表后，单表自增 ID 无法保证全局不重复*  基于 Redis 的全局唯一 ID 生成策略：采用 时间戳差值（高位） + 自增序列（低位） 的方式，通过 Redis 的 INCR 命令每天重">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liziling132.github.io/img/16.png">
+<meta property="article:published_time" content="2026-04-20T04:00:02.000Z">
+<meta property="article:modified_time" content="2026-09-28T05:16:26.769Z">
+<meta property="article:author" content="Ling">
+<meta property="article:tag" content="黑马点评">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liziling132.github.io/img/16.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "黑马点评03",
+  "url": "https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403/",
+  "image": "https://liziling132.github.io/img/16.png",
+  "datePublished": "2026-04-20T04:00:02.000Z",
+  "dateModified": "2026-09-28T05:16:26.769Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "https://liziling132.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/38.png"><link rel="canonical" href="https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '黑马点评03',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/36.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/img/loading.png" data-lazy-src="/img/38.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/16.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/img/loading.png" data-lazy-src="/img/38.png" alt="Logo"><span class="site-name"></span></a><a class="nav-page-title" href="/"><span class="site-name">黑马点评03</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">黑马点评03</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-20T04:00:02.000Z" title="发表于 2026-04-20 12:00:02">2026-04-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-28T05:16:26.769Z" title="更新于 2026-09-28 13:16:26">2026-09-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="黑马点评03：优惠劵秒杀"><a href="#黑马点评03：优惠劵秒杀" class="headerlink" title="黑马点评03：优惠劵秒杀"></a>黑马点评03：优惠劵秒杀</h1><h3 id="全局唯一ID"><a href="#全局唯一ID" class="headerlink" title="全局唯一ID"></a>全局唯一ID</h3><p>秒杀业务中，数据库自增 ID 不够用：</p>
+<ul>
+<li><em><strong>*多台服务器同时处理请求 → 每台数据库自增 ID 可能冲突*</strong></em></li>
+<li><em><strong>*数据量极大（千万、亿级）→ 自增 ID 容易暴露业务量*</strong></em></li>
+<li><em><strong>*分库分表后，单表自增 ID 无法保证全局不重复*</strong></em></li>
+</ul>
+<p>基于 Redis 的全局唯一 ID 生成策略：<br>采用 时间戳差值（高位） + 自增序列（低位） 的方式，通过 Redis 的 INCR 命令每天重置序列号，保证 ID 在分布式环境下唯一且趋势递增。相比数据库自增，性能更高、支持分库分表；相比雪花算法，实现更简单、无时钟回拨风险（依赖 Redis 时间）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 配置常量</span><br><span class="line">private static final long START_TIMESTAMP = 1672531200L; // 2025-01-01</span><br><span class="line">private static final int COUNT_BITS = 32;  // 序列号占用32位</span><br><span class="line"></span><br><span class="line">public long nextId(String keyPrefix) &#123;</span><br><span class="line">    // 1. 获取当前时间戳差值（秒级）</span><br><span class="line">    long now = System.currentTimeMillis() / 1000;</span><br><span class="line">    long timestamp = now - START_TIMESTAMP;  // 比如 = 123456789</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    // 2. 获取序列号（Redis自增）</span><br><span class="line">    String key = &quot;icr:&quot; + keyPrefix + &quot;:&quot; + LocalDate.now();</span><br><span class="line">    Long sequence = redisTemplate.opsForValue().increment(key);  // 比如 = 5</span><br><span class="line">    </span><br><span class="line">    // 3. 位运算合并</span><br><span class="line">    // timestamp 左移 32 位，空出低32位给 sequence</span><br><span class="line">    long id = (timestamp &lt;&lt; COUNT_BITS) | sequence;</span><br><span class="line">    </span><br><span class="line">    return id;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="乐观锁解决库存超卖"><a href="#乐观锁解决库存超卖" class="headerlink" title="乐观锁解决库存超卖"></a>乐观锁解决库存超卖</h3><p><img src= "/img/loading.png" data-lazy-src="90963834c5ca4106acc57351af0530c1.png" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sql</span><br><span class="line"></span><br><span class="line">update seckill_voucher </span><br><span class="line">set stock = stock - 1 </span><br><span class="line">where voucher_id = ? </span><br><span class="line">  and stock &gt; 0     -- 这是乐观锁的关键！</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="一人一单"><a href="#一人一单" class="headerlink" title="一人一单"></a>一人一单</h3><h4 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">请求进来</span><br><span class="line">  -&gt; Redis Lua 判断库存和一人一单</span><br><span class="line">  -&gt; Redis 预扣库存</span><br><span class="line">  -&gt; Kafka 异步发送订单消息</span><br><span class="line">  -&gt; 立即返回订单ID</span><br><span class="line">  -&gt;  Java 发送 Kafka 订单消息</span><br><span class="line">  -&gt; 数据库事务保存订单并扣减库存</span><br><span class="line">  -&gt; 唯一索引和 stock &gt; 0 做最终兜底</span><br></pre></td></tr></table></figure>
+
+<p><img src= "/img/loading.png" data-lazy-src="image-20260927151114814.png" alt="image-20260927151114814"></p>
+<p>为了能在内存中极速完成校验，Redis 中专门设计了两个 key：</p>
+<ul>
+<li><strong>库存 Key (String 类型)</strong>：<code>seckill:stock:{voucherId}</code>，存储当前优惠券的剩余库存量。在秒杀开始前，系统会提前将 MySQL 中的库存量“预热”（加载）到 Redis 中。</li>
+<li><strong>记录购买者的 Key (Set 类型)</strong>：<code>seckill:order:{voucherId}</code>，这是一个哈希集合。里面专门存放所有成功抢到该优惠券的 <code>userId</code>。</li>
+</ul>
+<p>*<em>用 Lua 脚本，是因为它既能保证*</em>“检查库存 + 扣库存 + 记录用户”*<em>这三步的原子性，又能做条件判断（库存不足就返回失败），而且性能极高，不会让线程阻塞等待。Redis 事务做不了条件判断，分布式锁性能差且会阻塞。Lua 脚本是秒杀场景下唯一正确的选择。</em>*</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1. 接收 Java 客户端传入的参数</span></span><br><span class="line"><span class="keyword">local</span> voucherId = KEYS[<span class="number">1</span>]  <span class="comment">-- 秒杀券 ID</span></span><br><span class="line"><span class="keyword">local</span> userId = ARGV[<span class="number">1</span>]     <span class="comment">-- 用户 ID</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. 拼接底层的缓存 Key</span></span><br><span class="line"><span class="keyword">local</span> stockKey = <span class="string">&#x27;seckill:stock:&#x27;</span> .. voucherId    <span class="comment">-- 记录库存的 String Key</span></span><br><span class="line"><span class="keyword">local</span> orderKey = <span class="string">&#x27;seckill:order:&#x27;</span> .. voucherId    <span class="comment">-- 记录购买者的 Set Key</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 3. 校验逻辑一：判断库存</span></span><br><span class="line"><span class="comment">-- 利用 redis.call 发起 get 命令，转为数字后判断</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">tonumber</span>(redis.call(<span class="string">&#x27;get&#x27;</span>, stockKey)) &lt;= <span class="number">0</span>) <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> <span class="comment">-- 返回错误码 1：库存不足</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 4. 校验逻辑二：判断一人一单</span></span><br><span class="line"><span class="comment">-- 利用 sismember 检查当前 userId 是否已经在这个券的 Set 集合里</span></span><br><span class="line"><span class="keyword">if</span> (redis.call(<span class="string">&#x27;sismember&#x27;</span>, orderKey, userId) == <span class="number">1</span>) <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> <span class="comment">-- 返回错误码 2：该用户已经买过</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 5. 资格锁定（写入操作）</span></span><br><span class="line">redis.call(<span class="string">&#x27;incrby&#x27;</span>, stockKey, <span class="number">-1</span>)     <span class="comment">-- 扣减 1 个库存</span></span><br><span class="line">redis.call(<span class="string">&#x27;sadd&#x27;</span>, orderKey, userId)   <span class="comment">-- 将当前用户 ID 塞入购买者集合</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> <span class="comment">-- 返回 0：校验通过，抢购成功</span></span><br></pre></td></tr></table></figure>
+
+
+
+<pre><code>private static final DefaultRedisScript&lt;Long&gt; SECKILL_SCRIPT ;
+//静态代码块进行初始化
+static {
+    SECKILL_SCRIPT = new DefaultRedisScript&lt;&gt;();
+    SECKILL_SCRIPT.setLocation(new ClassPathResource(&quot;seckill.lua&quot;));
+    SECKILL_SCRIPT.setResultType(Long.class);
+}
+ 
+/**
+ * 下单秒杀优惠卷
+ * @param voucherId 优惠券id
+ * @return
+ */
+public Result seckillVoucher(Long voucherId){
+    //获取用户id
+    Long userId = UserHolder.getUser().getId();
+    //1.执行lua脚本
+  Long result=stringRedisTemplate.execute(
+            SECKILL_SCRIPT
+            , Collections.emptyList()
+    , voucherId.toString(),userId.toString()         );
+ 
+    //判断结果是否为0
+    int r=result.intValue();
+ 
+    //不为0，则代表没有购买资格
+    if (r!=0){
+        return Result.fail(r==1?&quot;库存不足&quot;:&quot;不能重复下单&quot;);
+    }
+</code></pre>
+<h4 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h4><p>代码里生产者在这里：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kafkaTemplate.send(</span><br><span class="line">    VOUCHER_ORDER_TOPIC,</span><br><span class="line">    voucherId.toString(),</span><br><span class="line">    JSONUtil.toJsonStr(voucherOrder)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>也就是把 <code>VoucherOrder</code> 转成 JSON，发送到 Kafka 的 <code>voucher.orders</code> topic。这里的 key 是 <code>voucherId</code>，value 是订单 JSON。</p>
+<p>消费者在这里：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@KafkaListener(topics = VOUCHER_ORDER_TOPIC, groupId = &quot;voucher-order-group&quot;)</span><br><span class="line">public void handleVoucherOrder(String message) &#123;</span><br><span class="line">    VoucherOrder voucherOrder = JSONUtil.toBean(message, VoucherOrder.class);</span><br><span class="line">    createVoucherOrder(voucherOrder);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它会监听 <code>voucher.orders</code> 这个 topic，一旦有订单消息，就反序列化成 <code>VoucherOrder</code>，然后调用 <code>createVoucherOrder()</code> 创建订单。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://liziling132.github.io">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403/">https://liziling132.github.io/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://liziling132.github.io" target="_blank">null</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%84/">黑马点评</a></div><div class="post-share"><div class="social-share" data-image="/img/16.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/05/11/%E6%B1%87%E7%BC%96/" title="汇编期末复习"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/25.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">汇编期末复习</div></div><div class="info-2"><div class="info-item-1">第一章机器语言与汇编语言的基础冯·诺依曼体系：该体系的核心思想是将程序当作数据存储起来，然后由计算机自动运行。 机器语言：它是机器指令的集合，而机器指令本质上就是一台机器可以正确执行的二进制码或电平脉冲命令。 汇编语言的产生：因为机器指令难以记忆，所以产生了汇编语言。汇编指令是机器指令的助记符，书写格式更接近人类语言，便于阅读和记忆。程序员编写的汇编指令需要通过“编译器”转换成机器码才能被计算机执行。 汇编语言的组成：它的核心是决定了语言特性的汇编指令，此外还包含由编译器执行的伪指令，以及供编译器识别的其他符号。 指令、数据与存储器（内存）指令与数据的统一性：指令和数据仅仅是应用上的概念区分。在内存或磁盘中，它们没有任何物理区别，全都是二进制信息。 存储器的重要性：CPU要工作，就必须从存储器（内存）中获取指令和数据。磁盘中的程序或数据如果不读入内存，CPU是无法直接使用的。 存储单元与容量：存储器被划分为若干个从0开始顺序编号的存储单元。一个存储单元可以存储8个bit（即8位二进制数，记作1B）。微机中常用的容量计量单位换算为：1KB&#x3D;1024B，1MB&#x3D;1...</div></div></div></a><a class="pagination-related" href="/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402/" title="黑马点评02"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/16.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">黑马点评02</div></div><div class="info-2"><div class="info-item-1">黑马点评02：商户查询缓存商户查询缓存流程 缓存更新策略先更新数据库，再删除缓存1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556@Servicepublic class ShopServiceImpl extends ServiceImpl&lt;ShopMapper, Shop&gt; implements IShopService &#123;        @Autowired    private StringRedisTemplate redisTemplate;        // 查询单个店铺（带缓存）    @Override    public Result queryById(Long id) &#123;        String key = CACHE_SHOP_KEY + id;                // 1. 从缓存查询        String shopJson = redisTe...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8401/" title="黑马点评01"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/16.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-20</div><div class="info-item-2">黑马点评01</div></div><div class="info-2"><div class="info-item-1">黑马点评01：短信登陆第一版用Session实现发送验证码流程 接收手机号，进行基本校验（非空、格式）。 调用短信服务商API发送验证码 关键步骤：将验证码存入 HttpSession。 Key：一个固定字符串或与手机号关联的Key，例如 “code” 或 “login：code：”+phone。 Value：验证码本身。 登录注册流程 校验登陆状态 为了保护需要登录才能访问的接口，项目通过 Spring MVC 的拦截器（Interceptor）来实现状态校验和信息共享：  拦截请求： 拦截器会拦截客户端的请求，并尝试从 HttpSession 中获取 &quot;user&quot; 属性。 状态判断： 如果没有获取到用户信息，说明未登录，直接拦截请求并返回 401 状态码。 如果获取到了用户信息，说明已登录。   保存至 ThreadLocal： 拦截器将获取到的 UserDTO 保存到 ThreadLocal（项目中封装为 UserHolder 工具类）中。这一步非常关键，它实现了线程隔离，使得在后续的 Controller、Service 层中，可以随时随地通过 Use...</div></div></div></a><a class="pagination-related" href="/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8402/" title="黑马点评02"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/16.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-20</div><div class="info-item-2">黑马点评02</div></div><div class="info-2"><div class="info-item-1">黑马点评02：商户查询缓存商户查询缓存流程 缓存更新策略先更新数据库，再删除缓存1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556@Servicepublic class ShopServiceImpl extends ServiceImpl&lt;ShopMapper, Shop&gt; implements IShopService &#123;        @Autowired    private StringRedisTemplate redisTemplate;        // 查询单个店铺（带缓存）    @Override    public Result queryById(Long id) &#123;        String key = CACHE_SHOP_KEY + id;                // 1. 从缓存查询        String shopJson = redisTe...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/img/loading.png" data-lazy-src="/img/38.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liziling132"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/wechat.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">李子凌的个人博客，平时会记录一些自己的学习过程和生活经历，不定期更新，欢迎来找我玩。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403%EF%BC%9A%E4%BC%98%E6%83%A0%E5%8A%B5%E7%A7%92%E6%9D%80"><span class="toc-number">1.</span> <span class="toc-text">黑马点评03：优惠劵秒杀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%94%AF%E4%B8%80ID"><span class="toc-number">1.1.</span> <span class="toc-text">全局唯一ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81%E8%A7%A3%E5%86%B3%E5%BA%93%E5%AD%98%E8%B6%85%E5%8D%96"><span class="toc-number">1.2.</span> <span class="toc-text">乐观锁解决库存超卖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%BA%E4%B8%80%E5%8D%95"><span class="toc-number">1.3.</span> <span class="toc-text">一人一单</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">执行流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kafka"><span class="toc-number">1.3.2.</span> <span class="toc-text">kafka</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/09/28/kafka/" title="Kafka"><img src= "/img/loading.png" data-lazy-src="/img/23.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kafka"/></a><div class="content"><a class="title" href="/2026/09/28/kafka/" title="Kafka">Kafka</a><time datetime="2026-09-28T04:00:00.000Z" title="发表于 2026-09-28 12:00:00">2026-09-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/23/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口"><img src= "/img/loading.png" data-lazy-src="/img/40.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="滑动窗口"/></a><div class="content"><a class="title" href="/2026/08/23/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口">滑动窗口</a><time datetime="2026-08-23T04:00:00.000Z" title="发表于 2026-08-23 12:00:00">2026-08-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" title="计算机组成原理"><img src= "/img/loading.png" data-lazy-src="/img/25.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机组成原理"/></a><div class="content"><a class="title" href="/2026/06/22/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" title="计算机组成原理">计算机组成原理</a><time datetime="2026-06-22T02:00:00.000Z" title="发表于 2026-06-22 10:00:00">2026-06-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/06/10/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程期末复习"><img src= "/img/loading.png" data-lazy-src="/img/25.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软件工程期末复习"/></a><div class="content"><a class="title" href="/2026/06/10/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程期末复习">软件工程期末复习</a><time datetime="2026-06-10T07:00:00.000Z" title="发表于 2026-06-10 15:00:00">2026-06-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/25/Redis/" title="Redis数据库"><img src= "/img/loading.png" data-lazy-src="/img/23.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis数据库"/></a><div class="content"><a class="title" href="/2026/05/25/Redis/" title="Redis数据库">Redis数据库</a><time datetime="2026-05-25T07:00:00.000Z" title="发表于 2026-05-25 15:00:00">2026-05-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/16.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
