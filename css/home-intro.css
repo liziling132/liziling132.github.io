@@ -2,6 +2,18 @@ body.intro-lock {
   overflow: hidden;
 }
 
+html.home-intro-pending body {
+  background: #07080d;
+}
+
+html.home-intro-pending body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #07080d;
+  content: '';
+}
+
 :root {
   --intro-cut-angle: -11.5deg;
 }

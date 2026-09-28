@@ -51,6 +51,7 @@
 
     document.body.classList.add('intro-lock');
     document.body.appendChild(intro);
+    document.documentElement.classList.remove('home-intro-pending');
 
     requestAnimationFrame(() => intro.classList.add('is-running'));
 
@@ -64,6 +65,8 @@
     document.body.classList.remove('home-post-reveal-ready');
 
     if (isHomePath() && !hasPlayedIntro() && !document.querySelector('.home-intro')) start();
+    else document.documentElement.classList.remove('home-intro-pending');
+
     if (isHomeListPath()) revealHomePosts();
   };
 
