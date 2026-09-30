@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Mybatis | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MyBatis 是什么？为什么说它是半自动 ORM？半ORM（对象关系映射）框架，内部封装JDBC，开发时只需关注SQL语句本身，无需处理加载驱动、创建连接等繁杂过程。通过XML或注解配置映射，将对象与数据库表关联。    ORMORM（Object Relational Mapping）是一种解决关系型数据库数据与简单Java对象（POJO）映射关系的技术。它通过使用描述对象和数据库之间映射的元">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis">
+<meta property="og:url" content="https://liziling132.github.io/2026/09/30/Mybatis/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="MyBatis 是什么？为什么说它是半自动 ORM？半ORM（对象关系映射）框架，内部封装JDBC，开发时只需关注SQL语句本身，无需处理加载驱动、创建连接等繁杂过程。通过XML或注解配置映射，将对象与数据库表关联。    ORMORM（Object Relational Mapping）是一种解决关系型数据库数据与简单Java对象（POJO）映射关系的技术。它通过使用描述对象和数据库之间映射的元">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liziling132.github.io/img/23.png">
+<meta property="article:published_time" content="2026-09-30T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-30T09:26:15.155Z">
+<meta property="article:author" content="Ling">
+<meta property="article:tag" content="八股">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liziling132.github.io/img/23.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Mybatis",
+  "url": "https://liziling132.github.io/2026/09/30/Mybatis/",
+  "image": "https://liziling132.github.io/img/23.png",
+  "datePublished": "2026-09-30T02:00:00.000Z",
+  "dateModified": "2026-09-30T09:26:15.155Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "https://liziling132.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/38.png"><link rel="canonical" href="https://liziling132.github.io/2026/09/30/Mybatis/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Mybatis',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><script>try{if((location.pathname==='/'||location.pathname==='/index.html')&&sessionStorage.getItem('ling-home-intro-played')!=='true')document.documentElement.classList.add('home-intro-pending')}catch(e){}</script><link rel="stylesheet" href="/css/home-intro.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/36.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/img/loading.png" data-lazy-src="/img/38.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/23.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/img/loading.png" data-lazy-src="/img/38.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">Mybatis</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Mybatis</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-09-30T02:00:00.000Z" title="发表于 2026-09-30 10:00:00">2026-09-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-09-30T09:26:15.155Z" title="更新于 2026-09-30 17:26:15">2026-09-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h3 id="MyBatis-是什么？为什么说它是半自动-ORM？"><a href="#MyBatis-是什么？为什么说它是半自动-ORM？" class="headerlink" title="MyBatis 是什么？为什么说它是半自动 ORM？"></a>MyBatis 是什么？为什么说它是半自动 ORM？</h3><p>半ORM（对象关系映射）框架，内部封装JDBC，开发时只需关注SQL语句本身，无需处理加载驱动、创建连接等繁杂过程。通过XML或注解配置映射，将对象与数据库表关联。   </p>
+<h4 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h4><p>ORM（Object Relational Mapping）是一种解决关系型数据库数据与简单Java对象（POJO）映射关系的技术。它通过使用描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系型数据库中。   </p>
+<h3 id="与传统的JDBC相比，MyBatis的优点？"><a href="#与传统的JDBC相比，MyBatis的优点？" class="headerlink" title="与传统的JDBC相比，MyBatis的优点？"></a>与传统的JDBC相比，MyBatis的优点？</h3><p>基于 SQL 语句编程，SQL 写在 XML 里，解除 sql 与程序代码的耦合</p>
+<p>支持编写动态 SQL 语句</p>
+<p>减少了 50%以上的代码量，消除了 JDBC 大量冗余的代码，不需要手动开关连接</p>
+<p>能够与 Spring 很好的集成，开发效率高</p>
+<h3 id="Mybatis动态sql标签"><a href="#Mybatis动态sql标签" class="headerlink" title="Mybatis动态sql标签"></a>Mybatis动态sql标签</h3><ul>
+<li><code>&lt;if&gt;</code>：按条件拼接 SQL。</li>
+<li><code>&lt;choose&gt;</code>、<code>&lt;when&gt;</code>、<code>&lt;otherwise&gt;</code>：从多个分支中选择一个。</li>
+<li><code>&lt;trim&gt;</code>、<code>&lt;where&gt;</code>、<code>&lt;set&gt;</code>：处理前后缀、多余的 <code>AND</code>、逗号等问题。</li>
+<li><code>&lt;foreach&gt;</code>：遍历集合，常用于 <code>IN</code> 条件和批量插入。</li>
+</ul>
+<h3 id="Mybatis有哪些核心组件？"><a href="#Mybatis有哪些核心组件？" class="headerlink" title="Mybatis有哪些核心组件？"></a>Mybatis有哪些核心组件？</h3><ul>
+<li><strong><code>SqlSessionFactoryBuilder</code></strong>：读取配置并创建 <code>SqlSessionFactory</code>。构建完成后通常就可以释放。</li>
+<li><strong><code>SqlSessionFactory</code></strong>：创建 <code>SqlSession</code>，构建成本较高，通常在应用中保留一个实例。</li>
+<li><strong><code>SqlSession</code></strong>：执行 SQL、管理事务并获取 Mapper。它不是线程安全的，应该限定在一次请求、一次方法或一次事务内。</li>
+<li><strong><code>Executor</code></strong>：负责执行sql，查询、更新、一级缓存。</li>
+<li><strong><code>StatementHandler</code></strong>：创建并操作 JDBC <code>Statement</code>。</li>
+<li><strong><code>ParameterHandler</code></strong>：把参数设置到 <code>PreparedStatement</code>。</li>
+<li><strong><code>ResultSetHandler</code></strong>：把 JDBC <code>ResultSet</code> 映射为 Java 对象。</li>
+</ul>
+<h3 id="Mybatis执行流程"><a href="#Mybatis执行流程" class="headerlink" title="Mybatis执行流程"></a>Mybatis执行流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">SqlSessionFactory</span><br><span class="line">        ↓ 创建</span><br><span class="line">    SqlSession</span><br><span class="line">        ↓ 获取</span><br><span class="line">    Mapper方法</span><br><span class="line">    ↓</span><br><span class="line">Executor</span><br><span class="line">    ↓</span><br><span class="line">StatementHandler</span><br><span class="line">    ↓</span><br><span class="line">ParameterHandler</span><br><span class="line">    ↓</span><br><span class="line">数据库</span><br><span class="line">    ↓</span><br><span class="line">ResultSetHandler</span><br><span class="line">    ↓</span><br><span class="line">Java对象</span><br></pre></td></tr></table></figure>
+
+<p><strong>初始化阶段（只做一次）：</strong></p>
+<ol>
+<li>读取配置，构建 <strong><code>SqlSessionFactory</code></strong>。</li>
+</ol>
+<p><strong>执行阶段（每次操作）：</strong></p>
+<ol start="2">
+<li>开启 <strong><code>SqlSession</code></strong>。 </li>
+<li>利用<strong>JDK 动态代理</strong>获取 Mapper 接口的代理对象。</li>
+<li>调用 Mapper 方法，底层交由核心中枢 <strong><code>Executor</code></strong>（执行器）调度（查缓存或查库）。</li>
+<li><strong><code>StatementHandler</code></strong>：生成并预编译底层 JDBC 的 SQL 语句。 </li>
+<li><strong><code>ParameterHandler</code></strong>：给 SQL 中的 <code>?</code> 占位符赋值（处理 <code>#{}</code>）。</li>
+<li><strong><code>ResultSetHandler</code></strong>：将返回的数据库表格数据自动映射并封装为 Java 对象。</li>
+</ol>
+<p>其中MyBatis 会为 Mapper 接口创建<strong>动态代理对象</strong>，调用接口方法时，代理对象会找到对应的 SQL 并执行。</p>
+<p>所以哪怕Mapper 接口本身没有实现类</p>
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface UserMapper &#123;</span><br><span class="line">    User selectById(Long id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapper.selectById(1L);</span><br></pre></td></tr></table></figure>
+
+<h3 id="和-的本质区别到底是什么？"><a href="#和-的本质区别到底是什么？" class="headerlink" title="#{} 和 ${} 的本质区别到底是什么？"></a><code>#{}</code> 和 <code>${}</code> 的本质区别到底是什么？</h3><p><code>#{}</code> 会被 MyBatis 解析为 JDBC 的预编译语句（<code>PreparedStatement</code>）中的 <code>?</code>。参数赋值时，JDBC 会自动对特殊字符进行转义。<strong>核心作用是防止 SQL 注入。</strong></p>
+<p><code>${}</code> 只是简单的字符串替换，发生在 SQL 解析的阶段，直接把参数拼接到 SQL 原文中，极易引发 SQL 注入。</p>
+<p>比如：SELECT * FROM user WHERE username &#x3D; ? AND password &#x3D; ?就不会sql注入</p>
+<h3 id="为什么-MyBatis-还要设计-？什么时候可能会用到-？"><a href="#为什么-MyBatis-还要设计-？什么时候可能会用到-？" class="headerlink" title="为什么 MyBatis 还要设计 ${}？什么时候可能会用到 ${}？"></a>为什么 MyBatis 还要设计 <code>${}</code>？什么时候可能会用到 <code>${}</code>？</h3><p>因为有些东西<strong>不能用 <code>#{}</code> 作为参数传递</strong>。</p>
+<p>最典型的就是：<strong>表名、列名、排序字段</strong>。</p>
+<p>假设要做一个动态排序，用户点击前端按钮，想按 <code>create_time</code> 降序排列。 如果用 <code>#{}</code>：</p>
+<blockquote>
+<p><code>ORDER BY #{columnName}</code>  ➡️  解析后变成  <code>ORDER BY &#39;create_time&#39;</code> （表字段被加了单引号，变成了普通字符串，SQL 会报错或排序失效）</p>
+</blockquote>
+<p>如果用 <code>${}</code>：</p>
+<blockquote>
+<p><code>ORDER BY ${columnName}</code>  ➡️  解析后变成  <code>ORDER BY create_time</code> （直接拼上去了，语法正确，完美运行）</p>
+</blockquote>
+<p>所以**<code>#{}</code> 用于值，<code>${}</code> 可以用于 SQL 结构**</p>
+<h3 id="resultType和resultMap"><a href="#resultType和resultMap" class="headerlink" title="resultType和resultMap"></a>resultType<code>和</code>resultMap</h3><h4 id="resultType"><a href="#resultType" class="headerlink" title="resultType"></a>resultType</h4><p><code>resultType</code> 直接指定返回对象类型，适合列名与属性名容易自动匹配的简单查询。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">    private Long id;</span><br><span class="line">    private String name;</span><br><span class="line">    private Integer age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;selectById&quot; resultType=&quot;User&quot;&gt;</span><br><span class="line">    SELECT id, name, age</span><br><span class="line">    FROM user</span><br><span class="line">    WHERE id = #&#123;id&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果<strong>数据库字段名和 Java 属性名能够对应上</strong>，直接用 <code>resultType</code> 就行。</p>
+<h4 id="resultMap"><a href="#resultMap" class="headerlink" title="resultMap"></a>resultMap</h4><p><code>resultMap</code> 可以显式描述列与属性的关系</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;resultMap id=&quot;userMap&quot; type=&quot;User&quot;&gt;</span><br><span class="line">    &lt;id property=&quot;id&quot; column=&quot;id&quot;/&gt;</span><br><span class="line">    &lt;result property=&quot;userName&quot; column=&quot;user_name&quot;/&gt;</span><br><span class="line">&lt;/resultMap&gt;</span><br></pre></td></tr></table></figure>
+
+<p>自动映射可以配合 <strong><code>mapUnderscoreToCamelCase=true</code></strong> 把 <code>user_name</code> 映射到 <code>userName</code>。复杂 Join 查询不宜过度依赖全自动映射，重名列应使用别名，并在 <code>resultMap</code> 中明确配置。</p>
+<p><code>resultMap</code> 还可以通过 <code>&lt;association&gt;</code> 和 <code>&lt;collection&gt;</code> 标签来处理一对一、一对多的复杂嵌套查询和结果集映射。</p>
+<h3 id="Mybatis缓存"><a href="#Mybatis缓存" class="headerlink" title="Mybatis缓存"></a>Mybatis缓存</h3><h4 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SqlSession</span><br><span class="line">   │</span><br><span class="line">   ├── 第一次 selectById(1)</span><br><span class="line">   │       ↓</span><br><span class="line">   │    查数据库</span><br><span class="line">   │       ↓</span><br><span class="line">   │    放进一级缓存</span><br><span class="line">   │</span><br><span class="line">   └── 第二次 selectById(1)</span><br><span class="line">           ↓</span><br><span class="line">        先查缓存</span><br><span class="line">           ↓</span><br><span class="line">       有 → 直接返回</span><br></pre></td></tr></table></figure>
+
+<p>同一个 SqlSession 中，相同的查询可以直接从缓存获取，减少数据库访问。</p>
+<p>缓存失效：</p>
+<p>如果执行了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT</span><br><span class="line">UPDATE</span><br><span class="line">DELETE</span><br></pre></td></tr></table></figure>
+
+<p>MyBatis 通常会清空一级缓存。因为数据库数据已经发生变化了。</p>
+<h4 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h4><p>它是跨 <code>SqlSession</code> 的。只要是针对同一个 Mapper（即同一个 XML 配置文件里的 SQL）的查询，不同的会话都可以共享这块缓存。</p>
+<p>开发一般禁止使用：跨 Mapper 修改同一张表时，其他命名空间的缓存不会自动知道。可能有<strong>脏数据</strong></p>
+<h3 id="Mapper-方法有多个参数时，如何引用参数？"><a href="#Mapper-方法有多个参数时，如何引用参数？" class="headerlink" title="Mapper 方法有多个参数时，如何引用参数？"></a>Mapper 方法有多个参数时，如何引用参数？</h3><p>推荐使用 <code>@Param</code> 明确参数名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">User <span class="title function_">selectByTenantAndId</span><span class="params">(</span></span><br><span class="line"><span class="params">    <span class="meta">@Param(&quot;tenantId&quot;)</span> Long tenantId,</span></span><br><span class="line"><span class="params">    <span class="meta">@Param(&quot;userId&quot;)</span> Long userId</span></span><br><span class="line"><span class="params">)</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectByTenantAndId&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line">  SELECT id, name</span><br><span class="line">  FROM users</span><br><span class="line">  WHERE tenant_id = #&#123;tenantId&#125;</span><br><span class="line">    AND id = #&#123;userId&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Java 代码编译成字节码的过程中，方法的局部变量名（比如你的 <code>tenantId</code> 和 <code>userId</code>）默认会被“擦除”。如果不加任何注解，MyBatis 在运行时看到的参数名会变成类似 <code>arg0</code>、<code>arg1</code> 或者 <code>param1</code>、<code>param2</code> 这种毫无意义的代号。</p>
+<h3 id="Mapper和-MapperScan"><a href="#Mapper和-MapperScan" class="headerlink" title="@Mapper和@MapperScan"></a>@Mapper<code>和</code>@MapperScan</h3><p><code>@Mapper</code> 用于标识一个接口是 MyBatis Mapper，让 MyBatis 为它创建代理对象；<code>@MapperScan</code> 用于批量扫描指定包下的 Mapper 接口，避免每个接口都添加 <code>@Mapper</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@MapperScan(&quot;com.xxx.mapper&quot;)</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class Application &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>注：<code>@Transactional</code> 一般放在 Service 层，因为一个业务可能包含多个数据库操作，调用多个mapper</p>
+<h3 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h3><p>mysql分页</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM user</span><br><span class="line">LIMIT 0,10;//从第 0 条开始，查询 10 条数据</span><br></pre></td></tr></table></figure>
+
+<p>实际项目：<strong>PageHelper</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PageHelper.startPage(1,10);//相当于LIMIT 0,10</span><br><span class="line"></span><br><span class="line">List&lt;User&gt; list = userMapper.selectUser();</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://liziling132.github.io">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://liziling132.github.io/2026/09/30/Mybatis/">https://liziling132.github.io/2026/09/30/Mybatis/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://liziling132.github.io" target="_blank">Ling的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%85%AB%E8%82%A1/">八股</a></div><div class="post-share"><div class="social-share" data-image="/img/23.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/09/29/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="反转链表"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/40.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">反转链表</div></div><div class="info-2"><div class="info-item-1">给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。 https://leetcode.cn/problems/reverse-linked-list/description/ 迭代12345678910111213141516171819202122232425class Solution &#123;    public ListNode reverseList(ListNode head) &#123;        ListNode curr = head;        ListNode pre = null;                while (curr != null) &#123;            // 1. 暂存下一个节点，并声明类型            ListNode next = curr.next;                         // 2. 反转：当前节点的 next 指向前一个节点            curr.next = pre;                        // 3. 指针整体向...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/05/19/Mysql/" title="MySQL数据库"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/23.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-19</div><div class="info-item-2">MySQL数据库</div></div><div class="info-2"><div class="info-item-1">sql基础MySQL（关系型数据库）与 NoSQL（非关系型数据库）   特性 MySQL (关系型&#x2F;RDBMS) NoSQL (非关系型)    存储模型 结构化存储（行&#x2F;列），像 Excel 表格 多样化存储（键值、文档、图形、列族）   架构 (Schema) 固定模式。必须先定义表结构才能存数据 动态模式。支持非结构化或半结构化数据   查询语言 使用标准 SQL 语言 语法各异（如：MongoDB 的查询、Redis 命令）   扩展能力 纵向扩展（提高单机 CPU、内存、硬盘） 横向扩展（通过增加机器节点组成集群）   事务特性 严格遵循 ACID（强一致性） 遵循 BASE 理论（最终一致性）   表间关联 支持复杂的 JOIN 多表联查 通常不支持或弱支持 JOIN   数据库三大范式第一范式（1NF）：要求数据库表的每一列都是不可分割的原子数据项。 **第二范式（2NF）：**需要确保数据库表中的每一列都和主键相关，而不能只与主键的某一部分相关（主要针对联合主键而言）。 第三范式 (3NF)：在 2NF 的基础上，非主键列必须“直接依赖”于主...</div></div></div></a><a class="pagination-related" href="/2026/05/25/Redis/" title="Redis数据库"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/23.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-25</div><div class="info-item-2">Redis数据库</div></div><div class="info-2"><div class="info-item-1">Day1Redis 是什么Redis 是一个高性能的 NoSQL 数据库，数据主要存储在内存中，所以读写速度很快。它支持 String、Hash、List、Set、ZSet 等数据结构，实际项目里常用来做缓存、验证码、登录 token、分布式锁、排行榜等。 Redis 和 MySQL 有什么区别？Redis 是内存型 key-value 数据库，速度快，适合做缓存；MySQL 是关系型数据库，数据主要持久化到磁盘，支持事务和复杂 SQL，适合做核心数据存储。实际项目中一般 MySQL 存真实数据，Redis 做缓存来提高访问速度。 Redis 为什么快一：基于内存操作 Redis 数据：直接存在内存 而 MySQL：主要在磁盘 二：使用高效的数据结构 redis 不是：简单 HashMap 它内部做了大量优化。 三：单线程避免线程切换和锁竞争 Redis 为什么单线程还快： 纯内存操作： 它的读写都在内存里完成，没有任何磁盘 I&#x2F;O 带来的硬件瓶颈，速度是纳秒级别的。 高效的 I&#x2F;O 多路复用： 也就是上面的多路复用机制，主线程只管处理“已经准备好”的事件，绝...</div></div></div></a><a class="pagination-related" href="/2026/04/19/Spring/" title="Spring"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/23.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-19</div><div class="info-item-2">Spring</div></div><div class="info-2"><div class="info-item-1">Spring是什么Spring 是一个轻量级 Java 开发框架，核心思想是 IoC 和 AOP。 IoC 用来管理对象的创建和依赖关系，降低耦合；AOP 用来把事务、日志、权限这些公共逻辑从业务代码中抽离出来。 在此基础上，Spring 又提供了 MVC、事务管理、整合数据库等能力，所以它成了 Java 后端开发的核心框架。 没有 Spring： 12UserService userService = new UserService();OrderService orderService = new OrderService(userService);  有 Spring： 12345678910@Servicepublic class UserService &#123;&#125;@Servicepublic class OrderService &#123;    @Autowired    private UserService userService;&#125;  区别：  以前你自己创建对象 现在 Spring 帮你创建对象 以前你自己维护依赖关系 现在 Spri...</div></div></div></a><a class="pagination-related" href="/2026/04/09/%E5%86%85%E9%83%A8%E7%B1%BB%E5%92%8C%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="内部类和函数式编程"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/23.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-09</div><div class="info-item-2">内部类和函数式编程</div></div><div class="info-2"><div class="info-item-1">内部类内部类就是类中再套一个类 eg： 1234class Outer &#123;    class Inner &#123;    &#125;&#125;    作用： 让一个类和另一个类关系更紧密 内部类可以方便访问外部类的成员 有些场景下写起来更方便，比如事件处理、临时小对象 Java 里常见有 4 种：  成员内部类 静态内部类 局部内部类 匿名内部类  成员内部类就是：像成员变量一样，直接写在类里面，不加 static。 123456789class Outer &#123;    private String name = &quot;Outer&quot;;    class Inner &#123;        public void show() &#123;            System.out.println(name);        &#125;    &#125;&#125;  这里 Inner 可以直接访问 Outer 的私有成员 name。 创建对象成员内部类对象不能直接 new，一般要先有外部类对象： 123Outer outer =...</div></div></div></a><a class="pagination-related" href="/2026/09/28/kafka/" title="Kafka"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/23.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-09-28</div><div class="info-item-2">Kafka</div></div><div class="info-2"><div class="info-item-1">消息队列 优点：解耦，削峰，异步 缺点：开发复杂，需要保证数据一致性 消息重复消费怎么解决？最经典的场景：Consumer 收到消息后，成功把数据处理完并写进了数据库，但就在准备向 Kafka 提交 Offset 的前一秒，系统突然宕机了（或者耗时过长触发了 Rebalance）。 等 Consumer 节点重启（或任务交接给其他节点）后，Kafka 检查记录发现：“这条消息的 Offset 没提交，肯定没被消费。” 于是把这批消息又发了一遍，导致重复处理。 如何保证幂等性（ 同一操作的多次执行对系统状态的影响与一次执行结果一致）： 唯一标识 MySQL 唯一索引防重 Redis 记录状态 &#x2F; SETNX 去重 消息丢失怎么解决的？确保生产者正常收到ack kafka集群 确保消费者在接收+处理消息后回复ack给中间件 kafka结构  客户端层Producer（生产者）：负责把消息发往 Kafka。 Consumer（消费者）：负责从 Kafka 拉取消息。 Consumer Group（消费者组）：Kafka 的一大特色。多个 Consumer 可以组成一个组来共同...</div></div></div></a><a class="pagination-related" href="/2026/04/13/%E9%9B%86%E5%90%88/" title="集合"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/23.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-13</div><div class="info-item-2">集合</div></div><div class="info-2"><div class="info-item-1">集合体系结构 Iterable                         &#x2F;&#x2F; 可迭代接口，表示可以使用迭代器或增强 for 遍历 └── Collection                  &#x2F;&#x2F; 单列集合的根接口，存一个一个的元素      ├── List                   &#x2F;&#x2F; 有序、可重复、有索引      │    ├── ArrayList         &#x2F;&#x2F; 底层是动态数组，查询快，增删慢      │    ├── LinkedList        &#x2F;&#x2F; 底层是双向链表，增删快，查询慢      │    └── Vector            &#x2F;&#x2F; 老版本动态数组，线程安全，较少使用      ├── Set                    &#x2F;&#x2F; 无索引、元素不可重复      │    ├── HashSet           &#x2F;&#x2F; 基于哈希表，无序，去重常用...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/img/loading.png" data-lazy-src="/img/38.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liziling132"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/wechat.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">李子凌的个人博客，平时会记录一些自己的学习过程和生活经历，不定期更新，欢迎来找我玩。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#MyBatis-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4%E5%AE%83%E6%98%AF%E5%8D%8A%E8%87%AA%E5%8A%A8-ORM%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">MyBatis 是什么？为什么说它是半自动 ORM？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ORM"><span class="toc-number">1.1.</span> <span class="toc-text">ORM</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E4%BC%A0%E7%BB%9F%E7%9A%84JDBC%E7%9B%B8%E6%AF%94%EF%BC%8CMyBatis%E7%9A%84%E4%BC%98%E7%82%B9%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">与传统的JDBC相比，MyBatis的优点？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis%E5%8A%A8%E6%80%81sql%E6%A0%87%E7%AD%BE"><span class="toc-number">3.</span> <span class="toc-text">Mybatis动态sql标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis%E6%9C%89%E5%93%AA%E4%BA%9B%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">Mybatis有哪些核心组件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">Mybatis执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C-%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%8C%BA%E5%88%AB%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">6.</span> <span class="toc-text">#{} 和 ${} 的本质区别到底是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-MyBatis-%E8%BF%98%E8%A6%81%E8%AE%BE%E8%AE%A1-%EF%BC%9F%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%8F%AF%E8%83%BD%E4%BC%9A%E7%94%A8%E5%88%B0-%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">为什么 MyBatis 还要设计 ${}？什么时候可能会用到 ${}？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#resultType%E5%92%8CresultMap"><span class="toc-number">8.</span> <span class="toc-text">resultType和resultMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#resultType"><span class="toc-number">8.1.</span> <span class="toc-text">resultType</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#resultMap"><span class="toc-number">8.2.</span> <span class="toc-text">resultMap</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis%E7%BC%93%E5%AD%98"><span class="toc-number">9.</span> <span class="toc-text">Mybatis缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-number">9.1.</span> <span class="toc-text">一级缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-number">9.2.</span> <span class="toc-text">二级缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mapper-%E6%96%B9%E6%B3%95%E6%9C%89%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E6%97%B6%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BC%95%E7%94%A8%E5%8F%82%E6%95%B0%EF%BC%9F"><span class="toc-number">10.</span> <span class="toc-text">Mapper 方法有多个参数时，如何引用参数？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mapper%E5%92%8C-MapperScan"><span class="toc-number">11.</span> <span class="toc-text">@Mapper和@MapperScan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5"><span class="toc-number">12.</span> <span class="toc-text">分页</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/09/30/Mybatis/" title="Mybatis"><img src= "/img/loading.png" data-lazy-src="/img/23.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mybatis"/></a><div class="content"><a class="title" href="/2026/09/30/Mybatis/" title="Mybatis">Mybatis</a><time datetime="2026-09-30T02:00:00.000Z" title="发表于 2026-09-30 10:00:00">2026-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/09/29/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="反转链表"><img src= "/img/loading.png" data-lazy-src="/img/40.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="反转链表"/></a><div class="content"><a class="title" href="/2026/09/29/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="反转链表">反转链表</a><time datetime="2026-09-29T04:00:00.000Z" title="发表于 2026-09-29 12:00:00">2026-09-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/09/28/LRU%20%E7%BC%93%E5%AD%98/" title="LRU缓存"><img src= "/img/loading.png" data-lazy-src="/img/40.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LRU缓存"/></a><div class="content"><a class="title" href="/2026/09/28/LRU%20%E7%BC%93%E5%AD%98/" title="LRU缓存">LRU缓存</a><time datetime="2026-09-28T04:05:00.000Z" title="发表于 2026-09-28 12:05:00">2026-09-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/09/28/kafka/" title="Kafka"><img src= "/img/loading.png" data-lazy-src="/img/23.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kafka"/></a><div class="content"><a class="title" href="/2026/09/28/kafka/" title="Kafka">Kafka</a><time datetime="2026-09-28T04:00:00.000Z" title="发表于 2026-09-28 12:00:00">2026-09-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/08/23/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口"><img src= "/img/loading.png" data-lazy-src="/img/40.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="滑动窗口"/></a><div class="content"><a class="title" href="/2026/08/23/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="滑动窗口">滑动窗口</a><time datetime="2026-08-23T04:00:00.000Z" title="发表于 2026-08-23 12:00:00">2026-08-23</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/23.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="/js/home-intro.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
