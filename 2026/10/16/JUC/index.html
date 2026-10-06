@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>并发 | Ling的个人博客</title><meta name="author" content="Ling"><meta name="copyright" content="Ling"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="CASCAS (Compare And Swap)是一种乐观锁，它默认没有其他线程来竞争，直到真正更新数据的那一刻才去验证。 CAS 操作需要三个核心操作数：  V (Value offset)：内存中实际的当前值。 A (Expected value)：你“认为”现在的旧值是多少。 B (New value)：你想要更新成的新值。  执行逻辑： 只有当内存里的真实值 V 等于你预期的旧值 A 时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并发">
+<meta property="og:url" content="https://liziling132.github.io/2026/10/16/JUC/index.html">
+<meta property="og:site_name" content="Ling的个人博客">
+<meta property="og:description" content="CASCAS (Compare And Swap)是一种乐观锁，它默认没有其他线程来竞争，直到真正更新数据的那一刻才去验证。 CAS 操作需要三个核心操作数：  V (Value offset)：内存中实际的当前值。 A (Expected value)：你“认为”现在的旧值是多少。 B (New value)：你想要更新成的新值。  执行逻辑： 只有当内存里的真实值 V 等于你预期的旧值 A 时">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liziling132.github.io/img/28.png">
+<meta property="article:published_time" content="2026-10-16T09:35:00.000Z">
+<meta property="article:modified_time" content="2026-10-06T03:47:06.516Z">
+<meta property="article:author" content="Ling">
+<meta property="article:tag" content="JUC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liziling132.github.io/img/28.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "并发",
+  "url": "https://liziling132.github.io/2026/10/16/JUC/",
+  "image": "https://liziling132.github.io/img/28.png",
+  "datePublished": "2026-10-16T09:35:00.000Z",
+  "dateModified": "2026-10-06T03:47:06.516Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Ling",
+      "url": "https://liziling132.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/38.png"><link rel="canonical" href="https://liziling132.github.io/2026/10/16/JUC/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '并发',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><script>try{if((location.pathname==='/'||location.pathname==='/index.html')&&sessionStorage.getItem('ling-home-intro-played')!=='true')document.documentElement.classList.add('home-intro-pending')}catch(e){}</script><link rel="stylesheet" href="/css/home-intro.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div id="web_bg" style="background-image: url(/img/36.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "/img/loading.png" data-lazy-src="/img/38.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/28.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "/img/loading.png" data-lazy-src="/img/38.png" alt="Logo"><span class="site-name">Ling的个人博客</span></a><a class="nav-page-title" href="/"><span class="site-name">并发</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">并发</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-16T09:35:00.000Z" title="发表于 2026-10-16 17:35:00">2026-10-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-06T03:47:06.516Z" title="更新于 2026-10-06 11:47:06">2026-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h1><p>CAS (Compare And Swap)是一种乐观锁，它默认没有其他线程来竞争，直到真正更新数据的那一刻才去验证。</p>
+<p>CAS 操作需要三个核心操作数：</p>
+<ul>
+<li><strong>V (Value offset)</strong>：内存中实际的当前值。</li>
+<li><strong>A (Expected value)</strong>：你“认为”现在的旧值是多少。</li>
+<li><strong>B (New value)</strong>：你想要更新成的新值。</li>
+</ul>
+<p><strong>执行逻辑：</strong> 只有当内存里的真实值 V 等于你预期的旧值 A 时，才把 V 更新为 B。如果不等于，说明在此期间有别的线程插队改了这个值，更新失败。</p>
+<h3 id="CAS是如何实现原子性的？"><a href="#CAS是如何实现原子性的？" class="headerlink" title="CAS是如何实现原子性的？"></a>CAS是如何实现原子性的？</h3><p>要保证“先比较，再交换”的原子性。</p>
+<p>Java 本身无法直接操作内存，但通过 <code>Unsafe</code> 类，可以调用 C++ 编写的 native 方法。CAS 的底层最终会映射到 CPU 的一条硬件指令 cmpxchg。<strong>因为它是硬件级别的指令，所以 CPU 会在指令级别保证这一个动作的绝对原子性，中途绝不会发生线程上下文切换。</strong></p>
+<h3 id="CAS-真的无锁吗？"><a href="#CAS-真的无锁吗？" class="headerlink" title="CAS 真的无锁吗？"></a>CAS 真的无锁吗？</h3><p>Java API 层面是无锁（乐观锁），硬件 CPU 层面不是完全没有锁，有<code>lock</code>总线锁 &#x2F; 缓存锁。</p>
+<p>cmpxchg在硬件层面还是通过<strong>总线锁或者缓存锁</strong>来实现。</p>
+<h3 id="自旋"><a href="#自旋" class="headerlink" title="自旋"></a>自旋</h3><p>在实际应用中，CAS 通常会搭配<strong>自旋</strong>（一个 <code>do-while</code> 循环）来使用。</p>
+<p>如果发现 V 不等于 A，说明被别人抢先了。这时候线程不会阻塞挂起，而是立刻重新去读取最新的 V，把它作为新的 A，再次尝试计算和 CAS 操作，直到成功为止。这就是所谓的“自旋锁”。</p>
+<h3 id="ABA-问题"><a href="#ABA-问题" class="headerlink" title="ABA 问题"></a>ABA 问题</h3><ol>
+<li><strong>第一步：自己主动读一次内存（get ()），存到线程本地变量</strong></li>
+<li><strong>第二步：调用 CAS（compareAndSet），CAS 指令内部又再读一次内存</strong></li>
+</ol>
+<p><strong>场景描述：</strong> 假设内存里的值原来是 A。线程 1 读到了 A，正准备把它改成 C。但就在线程 1 准备执行 CAS 之前，线程 2 飞速地把 A 改成了 B，然后又改回了 A。</p>
+<p><strong>后果：</strong> 此时线程 1 执行 CAS，发现内存里的值“依然”是 A，于是更新成功了。但实际上，这个 A 已经不是原来那个纯洁的 A 了（经历了 A -&gt; B -&gt; A 的变化）。在普通数字递增的场景下没问题，但在链表节点替换或带有状态流转的复杂业务中，会引发严重错误。</p>
+<p><strong>解决方法：</strong> 引入<strong>版本号机制</strong>。每次修改不仅更新值，还给版本号加 1（比如 1A -&gt; 2B -&gt; 3A）。Java 提供了 <code>AtomicStampedReference</code> 类，内部维护了一个带时间戳（或版本号）的引用，只有当“值”和“版本号”同时匹配时，CAS 才算成功。</p>
+<h1 id="synchronized"><a href="#synchronized" class="headerlink" title="synchronized"></a>synchronized</h1><table>
+<thead>
+<tr>
+<th><strong>修饰位置</strong></th>
+<th><strong>示例代码</strong></th>
+<th><strong>锁定的实际对象</strong></th>
+<th><strong>锁的颗粒度</strong></th>
+<th><strong>阻塞范围与影响</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>普通实例方法</strong></td>
+<td><code>public synchronized void doX()</code></td>
+<td>当前实例对象 (<code>this</code>)</td>
+<td>较大</td>
+<td>仅阻塞竞争<strong>同一个实例对象</strong>的其他线程。不同实例对象之间互不干扰。</td>
+</tr>
+<tr>
+<td><strong>静态方法</strong></td>
+<td><code>public static synchronized void doY()</code></td>
+<td>当前类的 <code>Class</code> 对象 (如 <code>MyClass.class</code>)</td>
+<td>最大</td>
+<td>阻塞竞争该类<strong>所有实例</strong>的静态同步方法的线程。注意：它与普通实例方法抢的是两把不同的锁，互不干扰。</td>
+</tr>
+<tr>
+<td><strong>同步代码块</strong></td>
+<td><code>synchronized(lockObj) { ... }</code></td>
+<td>括号中显式传入的具体对象</td>
+<td>最小</td>
+<td>仅阻塞尝试获取<strong>同一个指定对象</strong>的线程。极度推荐，可缩小同步范围，或利用不同对象实现锁分离。</td>
+</tr>
+</tbody></table>
+<p>锁是存在对象的对象头的 <strong>Mark Word</strong>里的</p>
+<h3 id="锁升级流程"><a href="#锁升级流程" class="headerlink" title="锁升级流程"></a>锁升级流程</h3><p>在 JDK 1.6 之前，<code>synchronized</code> 是纯粹的“重量级锁”，只要使用它，就会直接向底层操作系统申请 Mutex Lock（互斥量），导致线程在用户态和内核态之间频繁切换，性能开销极大。</p>
+<p>无锁 → 偏向锁 → 轻量级锁 → 重量级锁（锁只能升级，不能降级）</p>
+<h4 id="无锁"><a href="#无锁" class="headerlink" title="无锁"></a>无锁</h4><p>对象刚被 new 出来时，没有任何线程来竞争。此时 Mark Word 里主要记录的是对象的 HashCode 和分代年龄。</p>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>当第一个线程（假如是 Thread A）来获取锁时，JVM 发现现在是无锁状态，于是通过刚才讲过的 <strong>CAS 操作</strong>，把 Thread A 的线程 ID 记录到 Mark Word 中。</p>
+<ul>
+<li><strong>核心思想：</strong> 锁“偏心”于第一个拿到它的线程。</li>
+<li><strong>优势：</strong> 如果之后一直是 Thread A 来要这把锁，它连 CAS 都不用做，只要检查一下 Mark Word 里的线程 ID 是不是自己，就能直接长驱直入，开销接近于 0。</li>
+</ul>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>假设此时 Thread B 来了，它看到 Mark Word 里写着 Thread A 的名字，发现锁被占了。这就是**“锁竞争”**的开始。 此时，偏向锁被撤销，升级为轻量级锁。</p>
+<ul>
+<li><strong>核心思想：</strong> Thread B 觉得 Thread A 应该很快就会用完锁，没必要去阻塞挂起，不如在原地等一会儿。</li>
+<li><strong>底层机制：</strong> Thread B 开始执行 <strong>自旋</strong> （也就是一个 while 循环），不断地用 CAS 尝试去把 Mark Word 更新为指向自己的锁记录。</li>
+<li><strong>优势：</strong> 避免了线程被操作系统挂起和唤醒的巨大开销。</li>
+</ul>
+<h4 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h4><p>自旋是非常消耗 CPU 资源的（相当于 CPU 在空转）。如果 Thread B 自旋了很久（默认 10 次或者自适应自旋），Thread A 还是没有释放锁；或者在这个期间，Thread C、Thread D 也跑来抢锁了。 JVM 发现局面控制不住了，就会把锁膨胀为重量级锁。</p>
+<ul>
+<li><strong>核心思想：</strong> 放弃无谓的 CPU 空转，把所有没抢到锁的线程全部丢进等待队列，让操作系统去管理它们的休眠和唤醒。</li>
+<li><strong>代价：</strong> Mark Word 此时指向了重量级锁的指针（ObjectMonitor）。线程的阻塞和唤醒需要跨越到内核态，性能大打折扣。</li>
+</ul>
+<h3 id="monitor（监视器锁）"><a href="#monitor（监视器锁）" class="headerlink" title="monitor（监视器锁）"></a>monitor（监视器锁）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class ObjectMonitor &#123;</span><br><span class="line">    void*       _owner;         // 持有锁的线程</span><br><span class="line">    WaitSet     _WaitSet;       // 等待池（管理调用 wait() 方法的线程）</span><br><span class="line">    EntryList _EntryList;       // 锁池（管理因竞争锁失败而阻塞的线程）</span><br><span class="line">    int _recursions             // 记录锁的重入次数</span><br><span class="line">    // 其他不重要的字段 ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>每个对象在 JVM 里对应一个 <code>ObjectMonitor</code>（监视器对象），里面有锁池（Entry Set）、等待池（Wait Set）、计数器等等</li>
+<li>synchronized 编译成字节码后是 <strong><code>monitorenter</code> &#x2F; <code>monitorexit</code></strong> 两条指令：进入时执行 monitorenter 尝试获取锁，退出时执行 monitorexit 释放锁。</li>
+<li>获取锁：把 monitor 的持有者标记为当前线程，计数器 +1。</li>
+<li><strong>可重入</strong>：同一个线程再次进入，计数器再 +1（这也是为什么 synchronized 是可重入的）；退出时 -1，减到 0 才真正释放，别的线程才能拿到。</li>
+</ul>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h1 id="AQS"><a href="#AQS" class="headerlink" title="AQS"></a>AQS</h1><p><strong>AQS 是什么</strong>：JDK 提供的一个<strong>并发同步器基类</strong></p>
+<p><strong>AQS 的两个核心成员：</strong></p>
+<ol>
+<li><strong><code>volatile int state</code></strong>：同步状态位。0 表示锁空闲，&gt;0 表示被占用（可重入时累加）。具体含义由子类定义。</li>
+<li><strong>CLH 双向队列</strong>：抢不到锁的线程包装成节点（Node）排进队尾，阻塞等待；锁释放后唤醒队头节点。</li>
+</ol>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><ol>
+<li>线程尝试用 <strong>CAS</strong> 把 <code>state</code> 从 0 改成 1；成功 → 拿到锁，标记持有者为当前线程。</li>
+<li>失败 → 把当前线程包装成 Node <strong>入队</strong>（CLH 队尾）。</li>
+<li>入队后自旋 &#x2F; 阻塞，检查前驱节点；<strong>前驱是头节点且抢锁成功</strong> → 出队执行；否则挂起（park）。</li>
+<li>释放锁 → <code>state</code> 减回 0 → 唤醒后继节点（unpark）。</li>
+</ol>
+<h3 id="公平锁-vs-非公平锁"><a href="#公平锁-vs-非公平锁" class="headerlink" title="公平锁 vs 非公平锁"></a>公平锁 vs 非公平锁</h3><ul>
+<li><strong>非公平锁（默认）</strong>：新线程来了<strong>先插队 CAS 抢一次</strong>，抢不到才入队排队。优点：吞吐高（减少线程切换）；缺点：可能造成队头饥饿。</li>
+<li><strong>公平锁</strong>：先来先服务，严格按入队顺序拿锁。优点：公平；缺点：吞吐略低，且频繁让线程在阻塞 &#x2F; 唤醒间切换。</li>
+</ul>
+<h3 id="ReentrantLock"><a href="#ReentrantLock" class="headerlink" title="ReentrantLock"></a>ReentrantLock</h3><p><strong>可重入</strong>的意思是：如果一个线程已经拿到了这把锁，当它再次进入需要这把锁的代码块时，不会被自己阻塞，而是可以畅通无阻地继续执行，只是把“加锁次数”加 1。</p>
+<p>与synchronized区别：</p>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>synchronized</strong></th>
+<th><strong>ReentrantLock</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>实现层次</strong></td>
+<td><strong>JVM 层面</strong> (内置关键字，基于 C++ 实现的 ObjectMonitor)</td>
+<td><strong>API 层面</strong> (JDK 类，基于 AQS 和 CAS 实现)</td>
+</tr>
+<tr>
+<td><strong>加解锁方式</strong></td>
+<td><strong>自动释放</strong> (进入&#x2F;退出同步代码块，发生异常也会自动释放，不会死锁)</td>
+<td><strong>手动控制</strong> (必须手动调用 <code>lock()</code>，并在 <code>finally</code> 块中 <code>unlock()</code>)</td>
+</tr>
+<tr>
+<td><strong>响应中断与超时</strong></td>
+<td><strong>死等</strong> (不可中断，拿不到锁就一直阻塞)</td>
+<td><strong>灵活</strong> (支持 <code>lockInterruptibly()</code> 响应中断，支持 <code>tryLock()</code> 超时返回)</td>
+</tr>
+<tr>
+<td><strong>公平性</strong></td>
+<td>只能是<strong>非公平锁</strong></td>
+<td><strong>默认非公平锁</strong>，但可在构造函数传 <code>true</code> 实现公平锁</td>
+</tr>
+<tr>
+<td><strong>条件队列</strong></td>
+<td>只有一个等待队列 (<code>wait()/notify()</code>)</td>
+<td>支持绑定<strong>多个 <code>Condition</code> 对象</strong>，可实现多路、精准唤醒</td>
+</tr>
+</tbody></table>
+<h1 id="Atomic-原子类家族"><a href="#Atomic-原子类家族" class="headerlink" title="Atomic 原子类家族"></a>Atomic 原子类家族</h1><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>代表</th>
+<th>场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基本类型</td>
+<td><code>AtomicInteger/AtomicLong/AtomicBoolean</code></td>
+<td>计数器、标志位</td>
+</tr>
+<tr>
+<td>数组</td>
+<td><code>AtomicIntegerArray</code> 等</td>
+<td>数组元素原子更新</td>
+</tr>
+<tr>
+<td>引用</td>
+<td><code>AtomicReference</code>、<code>AtomicStampedReference</code>（带版本）、<code>AtomicMarkableReference</code>（带标记）</td>
+<td>原子替换对象，ABA 解决</td>
+</tr>
+<tr>
+<td>累加器（JDK8）</td>
+<td><code>LongAdder</code>、<code>LongAccumulator</code></td>
+<td>高并发计数</td>
+</tr>
+</tbody></table>
+<h3 id="AtomicLong-和-LongAdder-有什么区别？"><a href="#AtomicLong-和-LongAdder-有什么区别？" class="headerlink" title="AtomicLong 和 LongAdder 有什么区别？"></a>AtomicLong 和 LongAdder 有什么区别？</h3><p><code>AtomicLong</code> 在高并发下所有线程都抢<strong>同一个 value</strong>，CAS 冲突大、自旋多、性能差。</p>
+<p><strong>LongAdder（分段更新 &#x2F; 空间换时间）：</strong></p>
+<ul>
+<li>核心思想类似 <code>ConcurrentHashMap</code> 的分段锁。它内部维护了一个基础值 <code>base</code> 和一个 <code>Cell</code> 数组。</li>
+<li><strong>低并发时：</strong> 直接使用 CAS 更新 <code>base</code> 的值（表现和 <code>AtomicLong</code> 一样）。</li>
+<li><strong>高并发时（出现 CAS 冲突）：</strong> 它不再让所有线程去死磕 <code>base</code>，而是把线程哈希（Hash）映射到 <code>Cell</code> 数组的不同位置，让线程去 CAS 更新各自对应的 <code>Cell</code> 里的值。</li>
+</ul>
+<h1 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h1><p>ConcurrentHashMap不像<code>Hashtable</code> 给<strong>整表加锁</strong>，而是用<strong>细粒度锁</strong>，并发度高。</p>
+<h3 id="JDK-1-7-结构（分段锁-Segment）"><a href="#JDK-1-7-结构（分段锁-Segment）" class="headerlink" title="JDK 1.7 结构（分段锁 Segment）"></a>JDK 1.7 结构（分段锁 Segment）</h3><ul>
+<li>一个 Map 分成多个 <strong>Segment</strong>（默认 16），每个 Segment 内部是个小 HashTable。</li>
+<li>读写只锁<strong>命中的那个 Segment</strong>，其他 Segment 可并发 → 并发度 &#x3D; Segment 数量。</li>
+<li>缺点：结构复杂、分段数固定、扩容麻烦。</li>
+</ul>
+<h3 id="JDK-1-8-结构（CAS-synchronized-红黑树）"><a href="#JDK-1-8-结构（CAS-synchronized-红黑树）" class="headerlink" title="JDK 1.8 结构（CAS + synchronized + 红黑树）"></a>JDK 1.8 结构（CAS + synchronized + 红黑树）</h3><ul>
+<li>放弃分段，改回<strong>数组 + 链表 &#x2F; 红黑树</strong>（和 HashMap 1.8 类似）。</li>
+<li>并发控制：<strong>空桶用 CAS 直接放</strong>；<strong>非空桶用 synchronized 锁住桶头节点</strong>。</li>
+<li>链表长度 <strong>≥ 8</strong> 且数组长度 ≥ 64 → 转<strong>红黑树</strong>；红黑树节点 ≤ 6 → 转回链表。</li>
+<li>锁粒度更细（只锁一个桶），性能更好。</li>
+</ul>
+<p>与普通的 <code>HashMap</code> 不同，<code>ConcurrentHashMap</code> 不允许 <code>key</code> 或 <code>value</code> 为 <code>null</code>。传入 <code>null</code> 会抛出空指针异常。</p>
+<p>注：官方在 1.8 弃用 <code>ReentrantLock</code> 改用 <code>synchronized</code>，是因为 JVM 对 <code>synchronized</code> 做了大量锁升级优化（偏向锁 -&gt; 轻量级锁 -&gt; 重量级锁），且如果是每个节点都配备一把 <code>ReentrantLock</code>，内存开销会非常大。</p>
+<h3 id="核心-put-流程"><a href="#核心-put-流程" class="headerlink" title="核心 put() 流程"></a>核心 <code>put()</code> 流程</h3><ol>
+<li><strong>计算 Hash：</strong> 扰动函数计算 key 的 hash 值。</li>
+<li><strong>数组初始化：</strong> 采用懒加载，第一次 put 时才通过 CAS 初始化数组（默认长度 16）。</li>
+<li><strong>寻找槽位：</strong><ul>
+<li>如果该位置为空，<strong>CAS</strong> 尝试插入。成功则结束，失败则进入下一次自旋。</li>
+<li>如果该位置节点的 <code>hash == -1</code>（即 <code>MOVED</code> 状态），说明当前 ConcurrentHashMap 正在<strong>扩容</strong>，当前线程会调用 <code>helpTransfer()</code> <strong>协助扩容</strong>（这是 1.8 的一大亮点，多线程协同搬运数据）。</li>
+</ul>
+</li>
+<li><strong>加锁写入：</strong> 如果该位置有数据，利用 <code>synchronized</code> 锁住头节点，遍历链表或红黑树进行节点的插入或更新。</li>
+<li><strong>树化判断：</strong> 插入完成后，如果链表长度 链表长度 <strong>≥ 8</strong> 且数组长度 ≥ 64，将其转化为红黑树。</li>
+<li><strong>统计数量：</strong> 调用 <code>addCount()</code> 增加元素个数，并判断是否需要触发扩容。</li>
+</ol>
+<h3 id="统计-size-的设计"><a href="#统计-size-的设计" class="headerlink" title="统计 size 的设计"></a>统计 size 的设计</h3><p>普通 <code>HashMap</code> 只有一个 <code>size</code> 变量，而在高并发下，所有线程用 CAS 修改同一个 <code>size</code> 会导致严重冲突。 <code>ConcurrentHashMap</code> 借鉴了无锁模块中 <code>LongAdder</code> 的思想：</p>
+<ul>
+<li>内部维护了一个 <code>baseCount</code> 和一个 <code>CounterCell[]</code> 数组。</li>
+<li>并发量低时，直接 CAS 更新 <code>baseCount</code>。</li>
+<li>并发量高时，将数量累加分散到不同的 <code>CounterCell</code> 槽中。</li>
+<li>最终调用 <code>size()</code> 时，结果是 <code>baseCount</code> 加上所有 <code>CounterCell</code> 的值。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://liziling132.github.io">Ling</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://liziling132.github.io/2026/10/16/JUC/">https://liziling132.github.io/2026/10/16/JUC/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://liziling132.github.io" target="_blank">Ling的个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JUC/">JUC</a></div><div class="post-share"><div class="social-share" data-image="/img/28.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/10/13/quartz/" title="ruoyi quartz"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/27.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">ruoyi quartz</div></div><div class="info-2"><div class="info-item-1">Quartz是什么Quartz 是 Java 生态里一个专门做 “定时任务” 的库    Quartz 名词 类比 它是什么    Job 活本身 你要执行的代码（比如 “去采集温湿度”）   JobDetail 装活儿的盒子 盒子上写着 “这里面的活叫采集、参数是什么”，它绑定到具体的 Job   Trigger 闹钟 定义了 “什么时候响”（cron 表达式，比如每 5 分钟）   Scheduler 总管 把 “盒子 + 闹钟” 绑一起，然后用一个循环线程盯着所有闹钟，到点就把盒子里的活丢给线程池执行   流程： Scheduler 里有个循环线程 QuartzSchedulerThread，不停问每个 Trigger：”你的下次触发时间到了吗？” → 到了 → 把对应的 JobDetail 交给线程池 → 线程池起一个线程去跑 Job 里的 execute() 源码12345678910111213141516171819202122// 1. Job：你要干的活public class CollectJob implements Job &#123;    public...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/04/14/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="多线程基础"><img class="cover" src= "/img/loading.png" data-lazy-src="/img/28.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-04-14</div><div class="info-item-2">多线程基础</div></div><div class="info-2"><div class="info-item-1">进程和线程进程是程序执行的实体，每一个进程都是一个应用程序，都有自己的内存空间，CPU一个核心同时只能处理一件事情，当出现多个进程需要同时运行时，CPU一般通过时间片轮转调度算法，来实现多个进程的同时运行。 线程像进程里的执行路线  同一个进程里可以有多个线程 这些线程共享这个进程的内存和大部分资源 用来并发执行任务     维度 进程 (Process) 线程 (Thread)    本质 资源分配的基本单位 CPU 调度（执行）的基本单位   资源拥有 拥有独立的内存地址空间（Code, Data, Heap, Stack 等） 共享所属进程的资源，仅拥有少量的私有资源（如 PC, 栈, 寄存器）   创建&#x2F;切换开销 大。需要分配内存空间、初始化数据段等 小。直接共享进程资源，上下文切换比进程快得多   通信方式 复杂。需通过 IPC（管道、信号量、Socket、共享内存等） 简单。通过读写同一进程内的全局变量或堆内存即可通信   健壮性 高。一个进程崩溃通常不会影响其他进程 低。一个线程崩溃可能导致整个进程内的所有线程一起挂掉   线程的创建和启动继承Thread...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "/img/loading.png" data-lazy-src="/img/38.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Ling</div><div class="author-info-description">欢迎来到李子凌的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liziling132"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/liziling132" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:3473268688@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/img/wechat.png" target="_blank" title="Wechat"><i class="fab fa-weixin" style="color: #1AAD19;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">李子凌的个人博客，平时会记录一些自己的学习过程和生活经历，不定期更新，欢迎来找我玩。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CAS"><span class="toc-number">1.</span> <span class="toc-text">CAS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CAS%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E5%AD%90%E6%80%A7%E7%9A%84%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">CAS是如何实现原子性的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAS-%E7%9C%9F%E7%9A%84%E6%97%A0%E9%94%81%E5%90%97%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">CAS 真的无锁吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E6%97%8B"><span class="toc-number">1.3.</span> <span class="toc-text">自旋</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ABA-%E9%97%AE%E9%A2%98"><span class="toc-number">1.4.</span> <span class="toc-text">ABA 问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#synchronized"><span class="toc-number">2.</span> <span class="toc-text">synchronized</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E5%8D%87%E7%BA%A7%E6%B5%81%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">锁升级流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E9%94%81"><span class="toc-number">2.1.1.</span> <span class="toc-text">无锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%8F%E5%90%91%E9%94%81"><span class="toc-number">2.1.2.</span> <span class="toc-text">偏向锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81"><span class="toc-number">2.1.3.</span> <span class="toc-text">轻量级锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="toc-number">2.1.4.</span> <span class="toc-text">重量级锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#monitor%EF%BC%88%E7%9B%91%E8%A7%86%E5%99%A8%E9%94%81%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">monitor（监视器锁）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AQS"><span class="toc-number">3.</span> <span class="toc-text">AQS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E5%B9%B3%E9%94%81-vs-%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81"><span class="toc-number">3.2.</span> <span class="toc-text">公平锁 vs 非公平锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ReentrantLock"><span class="toc-number">3.3.</span> <span class="toc-text">ReentrantLock</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Atomic-%E5%8E%9F%E5%AD%90%E7%B1%BB%E5%AE%B6%E6%97%8F"><span class="toc-number">4.</span> <span class="toc-text">Atomic 原子类家族</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AtomicLong-%E5%92%8C-LongAdder-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">AtomicLong 和 LongAdder 有什么区别？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ConcurrentHashMap"><span class="toc-number">5.</span> <span class="toc-text">ConcurrentHashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK-1-7-%E7%BB%93%E6%9E%84%EF%BC%88%E5%88%86%E6%AE%B5%E9%94%81-Segment%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">JDK 1.7 结构（分段锁 Segment）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK-1-8-%E7%BB%93%E6%9E%84%EF%BC%88CAS-synchronized-%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">JDK 1.8 结构（CAS + synchronized + 红黑树）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83-put-%E6%B5%81%E7%A8%8B"><span class="toc-number">5.3.</span> <span class="toc-text">核心 put() 流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1-size-%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">5.4.</span> <span class="toc-text">统计 size 的设计</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/10/16/JUC/" title="并发"><img src= "/img/loading.png" data-lazy-src="/img/28.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="并发"/></a><div class="content"><a class="title" href="/2026/10/16/JUC/" title="并发">并发</a><time datetime="2026-10-16T09:35:00.000Z" title="发表于 2026-10-16 17:35:00">2026-10-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/10/13/quartz/" title="ruoyi quartz"><img src= "/img/loading.png" data-lazy-src="/img/27.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ruoyi quartz"/></a><div class="content"><a class="title" href="/2026/10/13/quartz/" title="ruoyi quartz">ruoyi quartz</a><time datetime="2026-10-13T08:00:00.000Z" title="发表于 2026-10-13 16:00:00">2026-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/09/30/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACK%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/" title="数组中的第K个最大元素"><img src= "/img/loading.png" data-lazy-src="/img/40.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数组中的第K个最大元素"/></a><div class="content"><a class="title" href="/2026/09/30/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E7%AC%ACK%E4%B8%AA%E6%9C%80%E5%A4%A7%E5%85%83%E7%B4%A0/" title="数组中的第K个最大元素">数组中的第K个最大元素</a><time datetime="2026-09-30T04:05:00.000Z" title="发表于 2026-09-30 12:05:00">2026-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/09/30/Mybatis/" title="Mybatis"><img src= "/img/loading.png" data-lazy-src="/img/23.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mybatis"/></a><div class="content"><a class="title" href="/2026/09/30/Mybatis/" title="Mybatis">Mybatis</a><time datetime="2026-09-30T02:00:00.000Z" title="发表于 2026-09-30 10:00:00">2026-09-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/09/29/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="反转链表"><img src= "/img/loading.png" data-lazy-src="/img/40.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="反转链表"/></a><div class="content"><a class="title" href="/2026/09/29/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="反转链表">反转链表</a><time datetime="2026-09-29T04:00:00.000Z" title="发表于 2026-09-29 12:00:00">2026-09-29</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/28.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By Ling</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="/js/home-intro.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      const usePjax = true
+      false
+        ? (usePjax ? pjax.loadUrl('/404.html') : window.location.href = '/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})()</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
