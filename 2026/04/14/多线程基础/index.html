@@ -207,7 +207,7 @@
 
 
 <p>实际上，线程和进程差不多，也会等待获取CPU资源，一旦获取到，就开始按顺序执行我们给定的程序，当需要等待外部IO操作（比如Scanner获取输入的文本），就会暂时处于休眠状态，等待通知，或是调用<code>sleep()</code>方法来让当前线程休眠一段时间</p>
-<p><img src= "/img/loading.png" data-lazy-src="image-20260414143119615.png" alt="image-20260414143119615"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/04/14/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/image-20260414143119615.png" alt="image-20260414143119615"></p>
 <h1 id="线程的状态"><a href="#线程的状态" class="headerlink" title="线程的状态"></a>线程的状态</h1><h2 id="线程的几种基本状态"><a href="#线程的几种基本状态" class="headerlink" title="线程的几种基本状态"></a>线程的几种基本状态</h2><table>
 <thead>
 <tr>
@@ -376,7 +376,7 @@
 <li><code>t1</code> 被唤醒</li>
 <li><code>t1</code> 重新拿到锁后继续执行</li>
 </ol>
-<h1 id="多线程情况下Java的内存管理"><a href="#多线程情况下Java的内存管理" class="headerlink" title="多线程情况下Java的内存管理"></a>多线程情况下Java的内存管理</h1><p><img src= "/img/loading.png" data-lazy-src="image-20260414160354093.png" alt="image-20260414160354093"></p>
+<h1 id="多线程情况下Java的内存管理"><a href="#多线程情况下Java的内存管理" class="headerlink" title="多线程情况下Java的内存管理"></a>多线程情况下Java的内存管理</h1><p><img src= "/img/loading.png" data-lazy-src="/2026/04/14/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/image-20260414160354093.png" alt="image-20260414160354093"></p>
 <h1 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h1><p><code>ThreadLocal</code> 可以简单理解成：</p>
 <p><strong>给每个线程都准备一份“自己专属的变量副本”。</strong></p>
 <p>也就是说，同一个 <code>ThreadLocal</code> 对象，不同线程去访问时，拿到的值是各自独立的，互不影响。</p>
@@ -473,7 +473,7 @@
 <h3 id="例-2：创建但不启动"><a href="#例-2：创建但不启动" class="headerlink" title="例 2：创建但不启动"></a>例 2：创建但不启动</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Thread t = Thread.ofPlatform()</span><br><span class="line">    .name(&quot;t1&quot;)</span><br><span class="line">    .unstarted(() -&gt; &#123;</span><br><span class="line">        System.out.println(&quot;run&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">t.start();</span><br></pre></td></tr></table></figure>
 
 <p>这里 <code>unstarted()</code> 只是创建线程，不会立即运行。</p>
-<h1 id="虚拟线程（Java21）"><a href="#虚拟线程（Java21）" class="headerlink" title="虚拟线程（Java21）"></a>虚拟线程（Java21）</h1><p><img src= "/img/loading.png" data-lazy-src="image-20260414172103427.png" alt="image-20260414172103427"></p>
+<h1 id="虚拟线程（Java21）"><a href="#虚拟线程（Java21）" class="headerlink" title="虚拟线程（Java21）"></a>虚拟线程（Java21）</h1><p><img src= "/img/loading.png" data-lazy-src="/2026/04/14/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/image-20260414172103427.png" alt="image-20260414172103427"></p>
 <p>虚拟线程是Java中的一种轻量级线程，由Java虚拟机（JVM）管理，与传统的操作系统级线程（Platform Threads）相比，它免去了平台线程的CPU的上下文切换，而是由程序在线程内自行控制，消耗的资源更少，启动和切换速度更快，进而可以在同一物理线程上并发执行大量虚拟线程。</p>
 <ul>
 <li><strong>平台线程：</strong> 就是我们上面讲解的线程，由操作系统进行调度。</li>

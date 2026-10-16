@@ -204,7 +204,7 @@
 <li><strong>E &#x3D; 14</strong></li>
 <li><strong>F &#x3D; 15</strong></li>
 </ul>
-<p><img src= "/img/loading.png" data-lazy-src="image-20260506175756099.png" alt="image-20260506175756099"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/05/11/%E6%B1%87%E7%BC%96/image-20260506175756099.png" alt="image-20260506175756099"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AX = 001AH</span><br></pre></td></tr></table></figure>
 
 <p>拆开来看：高8位 <strong><code>AH = 00H</code></strong>，低8位 <strong><code>AL = 1AH</code></strong></p>
@@ -358,7 +358,7 @@
 <td>12H</td>
 </tr>
 </tbody></table>
-<p><img src= "/img/loading.png" data-lazy-src="image-20260507192924569.png" alt="image-20260507192924569"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/05/11/%E6%B1%87%E7%BC%96/image-20260507192924569.png" alt="image-20260507192924569"></p>
 <h3 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a><strong>数据段</strong></h3><ul>
 <li>内存段可以定义为数据段：<ul>
 <li>连续内存，长度 ≤ 64KB</li>
@@ -378,8 +378,8 @@
 <p><code>push</code> 执行步骤：首先 <code>SP = SP - 2</code>，然后将数据送入 SS:SP 指向的新字单元中 。</p>
 <p><code>pop</code> 执行步骤：首先从 SS:SP 指向的字单元中读取数据，然后 <code>SP = SP + 2</code> 。</p>
 <p><em>注意</em>：出栈后，原栈顶元素的数据依然残留在内存中，但它已不在栈内，直到下次执行 <code>push</code> 指令时才会被新数据覆盖 。</p>
-<p><img src= "/img/loading.png" data-lazy-src="image-20260507203028021.png" alt="image-20260507203028021"></p>
-<p><img src= "/img/loading.png" data-lazy-src="image-20260507203055973.png" alt="image-20260507203055973"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/05/11/%E6%B1%87%E7%BC%96/image-20260507203028021.png" alt="image-20260507203028021"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/05/11/%E6%B1%87%E7%BC%96/image-20260507203055973.png" alt="image-20260507203055973"></p>
 <h3 id="栈顶超界与栈的容量限制"><a href="#栈顶超界与栈的容量限制" class="headerlink" title="栈顶超界与栈的容量限制"></a>栈顶超界与栈的容量限制</h3><p><strong>超界危险</strong>（栈满的时候再使用push或者栈空的时候再使用pop：8086 CPU 内部没有记录栈上下限的寄存器，它只知道栈顶在哪里（由 SS:SP 指示），而不知道程序员安排的栈空间有多大 。因此，CPU 不会自动保证不发生栈顶超界。程序员必须自己管理栈的大小，防止过度入栈或出栈导致覆盖其他重要数据或代码 。 </p>
 <p><strong>最大容量</strong>：因为 <code>push</code> 和 <code>pop</code> 等栈操作指令只修改 SP 的值 ，而 SP 是 16 位寄存器，变化范围是 0 ~ FFFFH 。因此，一个栈段的最大容量限制为 64KB 。</p>
 <h3 id="栈段"><a href="#栈段" class="headerlink" title="栈段"></a><strong>栈段</strong></h3><ul>
@@ -805,12 +805,12 @@
 <li>可以分为段内调用（<code>NEAR</code>）和段间调用（<code>FAR</code>）两种格式 。  </li>
 <li>子程序的末尾需要使用 <code>RET</code> 指令以便返回调用处 。</li>
 </ul>
-<p><img src= "/img/loading.png" data-lazy-src="image-20260511141251755.png" alt="image-20260511141251755"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/05/11/%E6%B1%87%E7%BC%96/image-20260511141251755.png" alt="image-20260511141251755"></p>
 <h3 id="现场保护："><a href="#现场保护：" class="headerlink" title="现场保护："></a><strong>现场保护</strong>：</h3><ul>
 <li>为了防止子程序改变主程序中寄存器的值，需要在子程序开始时使用 <code>PUSH</code> 指令保存寄存器状态 。  </li>
 <li>在子程序执行完毕、调用 <code>RET</code> 返回前，必须使用 <code>POP</code> 指令按相反的顺序恢复这些寄存器的状态 。</li>
 </ul>
-<p><img src= "/img/loading.png" data-lazy-src="image-20260511141400165.png" alt="image-20260511141400165"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/05/11/%E6%B1%87%E7%BC%96/image-20260511141400165.png" alt="image-20260511141400165"></p>
 <h3 id="子程序的调用机制："><a href="#子程序的调用机制：" class="headerlink" title="子程序的调用机制："></a><strong>子程序的调用机制</strong>：</h3><ul>
 <li><p>将经常使用或无规律重复的代码段设计成独立的、可反复调用的程序段 。  </p>
 </li>

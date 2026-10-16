@@ -172,7 +172,7 @@
 
 
 
-<h3 id="乐观锁解决库存超卖"><a href="#乐观锁解决库存超卖" class="headerlink" title="乐观锁解决库存超卖"></a>乐观锁解决库存超卖</h3><p><img src= "/img/loading.png" data-lazy-src="90963834c5ca4106acc57351af0530c1.png" alt="img"></p>
+<h3 id="乐观锁解决库存超卖"><a href="#乐观锁解决库存超卖" class="headerlink" title="乐观锁解决库存超卖"></a>乐观锁解决库存超卖</h3><p><img src= "/img/loading.png" data-lazy-src="/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403/90963834c5ca4106acc57351af0530c1.png" alt="img"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sql</span><br><span class="line"></span><br><span class="line">update seckill_voucher </span><br><span class="line">set stock = stock - 1 </span><br><span class="line">where voucher_id = ? </span><br><span class="line">  and stock &gt; 0     -- 这是乐观锁的关键！</span><br></pre></td></tr></table></figure>
 
 
@@ -181,7 +181,7 @@
 
 <h3 id="一人一单"><a href="#一人一单" class="headerlink" title="一人一单"></a>一人一单</h3><h4 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">请求进来</span><br><span class="line">  -&gt; Redis Lua 判断库存和一人一单</span><br><span class="line">  -&gt; Redis 预扣库存</span><br><span class="line">  -&gt; Kafka 异步发送订单消息</span><br><span class="line">  -&gt; 立即返回订单ID</span><br><span class="line">  -&gt;  Java 发送 Kafka 订单消息</span><br><span class="line">  -&gt; 数据库事务保存订单并扣减库存</span><br><span class="line">  -&gt; 唯一索引和 stock &gt; 0 做最终兜底</span><br></pre></td></tr></table></figure>
 
-<p><img src= "/img/loading.png" data-lazy-src="image-20260927151114814.png" alt="image-20260927151114814"></p>
+<p><img src= "/img/loading.png" data-lazy-src="/2026/04/20/%E9%BB%91%E9%A9%AC%E7%82%B9%E8%AF%8403/image-20260927151114814.png" alt="image-20260927151114814"></p>
 <p>为了能在内存中极速完成校验，Redis 中专门设计了两个 key：</p>
 <ul>
 <li><strong>库存 Key (String 类型)</strong>：<code>seckill:stock:{voucherId}</code>，存储当前优惠券的剩余库存量。在秒杀开始前，系统会提前将 MySQL 中的库存量“预热”（加载）到 Redis 中。</li>
