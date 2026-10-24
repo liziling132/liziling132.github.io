@@ -1,0 +1,36 @@
+#page-header.full_page .home-background-slide,
+#web_bg .home-background-slide {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-position: center center;
+  background-size: cover;
+  /* 固定背景会妨碍透明度动画的合成，图层随首页头部定位。 */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease-in-out;
+  will-change: opacity;
+}
+
+#page-header.full_page::before {
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 保留深色模式下覆盖在底图上的遮罩。 */
+#web_bg::before {
+  z-index: 1;
+  pointer-events: none;
+}
+
+#page-header.full_page #site-info,
+#page-header.full_page #scroll-down {
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-header.full_page .home-background-slide,
+  #web_bg .home-background-slide {
+    transition: none;
+  }
+}
